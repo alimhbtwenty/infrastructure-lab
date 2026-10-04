@@ -3,7 +3,7 @@ name: Build APK
 on:
   push:
     paths:
-      - "app/**"
+      - "App/**"
       - ".github/workflows/build-apk.yml"
   workflow_dispatch:
 
@@ -39,7 +39,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p build/www/fonts
-          cp app/index.html build/www/index.html
+          cp App/index.html build/www/index.html
           cd build
           npm init -y >/dev/null
           npm install --no-audit --no-fund \
