@@ -2,7 +2,7 @@
   "app": "lab-notebook",
   "schema": 1,
   "appVersion": "1.0",
-  "exportedAt": "2026-10-04T22:04:31.476Z",
+  "exportedAt": "2026-10-04T22:34:16.139Z",
   "config": {
     "startDate": "2026-10-04",
     "buddy": "",
@@ -169,6 +169,13 @@
       "minutes": 20,
       "note": "INC-000 — از روی زمان commitها",
       "ts": 1791084874000
+    },
+    {
+      "_id": "s-muuee78q",
+      "date": "2026-10-05",
+      "minutes": 45,
+      "note": "INC-001",
+      "ts": 1791153242666
     }
   ],
   "incs": [
