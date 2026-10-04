@@ -1,0 +1,186 @@
+{
+  "app": "lab-notebook",
+  "schema": 1,
+  "appVersion": "1.0",
+  "exportedAt": "2026-10-04T22:04:31.476Z",
+  "config": {
+    "startDate": "2026-10-04",
+    "buddy": "",
+    "slot": "",
+    "repo": "https://github.com/alimhbtwenty/infrastructure-lab",
+    "pausedUntil": null
+  },
+  "plan": [
+    {
+      "day": 1,
+      "done": true,
+      "title": "INC-000: ریپو + README + خروجی پایه (uname, df, ip, lsblk)"
+    },
+    {
+      "day": 2,
+      "done": false,
+      "title": "INC-001: فایل با chmod 000 — خطا، تشخیص با ls -l و stat، رفع"
+    },
+    {
+      "day": 3,
+      "done": false,
+      "title": "نصب Ubuntu Server در VMware + SSH از PowerShell + snapshot «clean»"
+    },
+    {
+      "day": 4,
+      "done": false,
+      "title": "سرویس متوقف‌شده: systemctl stop/status/start + journalctl -u"
+    },
+    {
+      "day": 5,
+      "done": false,
+      "title": "کاربر و گروه: useradd، groups، دسترسی sudo"
+    },
+    {
+      "day": 6,
+      "done": false,
+      "title": "لاگ‌خوانی: journalctl، /var/log، grep"
+    },
+    {
+      "day": 7,
+      "done": false,
+      "title": "استراحت / ممیزی هفتهٔ اول + خلاصهٔ جمعه"
+    },
+    {
+      "day": 8,
+      "done": false,
+      "title": "فایل حذف‌شده ولی باز: loop device + lsof +L1"
+    },
+    {
+      "day": 9,
+      "done": false,
+      "title": "fstab خراب → Emergency Mode (روی VM، اول snapshot)"
+    },
+    {
+      "day": 10,
+      "done": false,
+      "title": "ریکاوری از GRUB با rw init=/bin/bash"
+    },
+    {
+      "day": 11,
+      "done": false,
+      "title": "Nginx بالا نمی‌آید: nginx -t، ss -lntp، journalctl"
+    },
+    {
+      "day": 12,
+      "done": false,
+      "title": "403 در Nginx: مالکیت و مجوز پوشهٔ وب"
+    },
+    {
+      "day": 13,
+      "done": false,
+      "title": "دیسک پر: df -h، du، find -size"
+    },
+    {
+      "day": 14,
+      "done": false,
+      "title": "دروازهٔ روز ۱۴ + باز کردن پارکینگ (حداکثر ۱۵ دقیقه)"
+    },
+    {
+      "day": 15,
+      "done": false,
+      "title": "کاربر نمی‌تواند وارد شود (shell = /sbin/nologin)"
+    },
+    {
+      "day": 16,
+      "done": false,
+      "title": "sudoers خراب — رفع امن با visudo"
+    },
+    {
+      "day": 17,
+      "done": false,
+      "title": "cron اجرا نمی‌شود — PATH یا مجوز"
+    },
+    {
+      "day": 18,
+      "done": false,
+      "title": "چرا سرویس در بوت قبلی fail شد؟ journalctl -b -1"
+    },
+    {
+      "day": 19,
+      "done": false,
+      "title": "دیسک پر از یک لاگ بزرگ + logrotate"
+    },
+    {
+      "day": 20,
+      "done": false,
+      "title": "تمام شدن inode روی loop device (df -i)"
+    },
+    {
+      "day": 21,
+      "done": false,
+      "title": "استراحت / بازسازی INC-001 از ترمینال خالی"
+    },
+    {
+      "day": 22,
+      "done": false,
+      "title": "LVM: افزودن دیسک — pvcreate، vgextend، lvextend"
+    },
+    {
+      "day": 23,
+      "done": false,
+      "title": "LVM: بزرگ کردن فایل‌سیستم (resize2fs)"
+    },
+    {
+      "day": 24,
+      "done": false,
+      "title": "پروسس CPU را می‌خورد: top، nice، kill"
+    },
+    {
+      "day": 25,
+      "done": false,
+      "title": "فشار حافظه / OOM: free، dmesg"
+    },
+    {
+      "day": 26,
+      "done": false,
+      "title": "فایل‌سیستم read-only شد: تشخیص و remount"
+    },
+    {
+      "day": 27,
+      "done": false,
+      "title": "کلید SSH رد شد «bad ownership or modes»"
+    },
+    {
+      "day": 28,
+      "done": false,
+      "title": "Bash: disk-alert.sh + shellcheck"
+    },
+    {
+      "day": 29,
+      "done": false,
+      "title": "Bash: ۱۰ IP پرتکرار از لاگ nginx (awk/sort/uniq)"
+    },
+    {
+      "day": 30,
+      "done": false,
+      "title": "استراحت / مرور + بازسازی یک INC"
+    }
+  ],
+  "sessions": [
+    {
+      "_id": "s-2026-10-04-first",
+      "date": "2026-10-04",
+      "minutes": 20,
+      "note": "INC-000 — از روی زمان commitها",
+      "ts": 1791084874000
+    }
+  ],
+  "incs": [
+    {
+      "_id": "inc-000",
+      "num": 0,
+      "title": "Lab setup (Killercoda baseline)",
+      "date": "2026-10-04",
+      "status": "done",
+      "verified": true,
+      "rebroken": false
+    }
+  ],
+  "parking": []
+}
