@@ -1,0 +1,16 @@
+Day 15: user cannot log in (shell set to /sbin/nologin) - fix
+Day 16: broken sudoers - fix safely with visudo
+Day 17: cron job not running - find why (PATH / permissions)
+Day 18: why did a service fail last boot? (journalctl -b -1)
+Day 19: disk full from a big log - fix + logrotate
+Day 20: inode exhaustion on a loop device (df -i)
+Day 21: SLACK / re-break INC-001 from a blank terminal
+Day 22: LVM - add disk: pvcreate, vgextend, lvextend
+Day 23: LVM - grow the filesystem (resize2fs)
+Day 24: process eating CPU - top, nice, kill
+Day 25: memory pressure / OOM - free, dmesg
+Day 26: filesystem became read-only - diagnose and remount
+Day 27: SSH key refused "bad ownership or modes" - fix
+Day 28: Bash: disk-alert.sh + shellcheck
+Day 29: Bash: top 10 IPs from an nginx log (awk/sort/uniq)
+Day 30: SLACK / review + re-break one INC
