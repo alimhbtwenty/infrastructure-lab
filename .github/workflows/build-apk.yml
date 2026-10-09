@@ -17,7 +17,7 @@ concurrency:
 env:
   APP_ID: io.github.alimhbtwenty.labnotebook
   APP_NAME: دفتر آزمایشگاه
-  VERSION_NAME: 1.0.${{ github.run_number }}
+  VERSION_NAME: 1.1.${{ github.run_number }}
 
 jobs:
   build:

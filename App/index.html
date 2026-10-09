@@ -4,133 +4,152 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<title>دفتر آزمایشگاه</title>
+<title>دفتر آزمایشگاه v1.1</title>
 <style>
-/* Font is bundled into the APK by the build workflow (fonts/vazirmatn.woff2); system fonts are the fallback. */
 @font-face{font-family:"Vazirmatn";src:url("fonts/vazirmatn.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
 :root{
-  --paper:#eef1f4; --sheet:#ffffff; --grid:#dfe5ec; --ink:#16212c; --ink-2:#4a5866; --rule:#cbd4de;
-  --accent:#2b56c9; --accent-soft:#e3eafb; --on-accent:#ffffff;
-  --good:#1f7a4d; --good-soft:#dff1e7; --warn:#a86500; --warn-soft:#fbefd9; --bad:#b3261e; --bad-soft:#f8e1df;
+  --paper:#f1f5f9; --sheet:#ffffff; --grid:#e2e8f0; --ink:#0f172a; --ink-2:#475569; --rule:#cbd5e1;
+  --accent:#2563eb; --accent-soft:#eff6ff; --on-accent:#ffffff;
+  --good:#059669; --good-soft:#ecfdf5; --warn:#d97706; --warn-soft:#fffbeb; --bad:#dc2626; --bad-soft:#fef2f2;
   --f-body:"Vazirmatn", Tahoma, "Segoe UI", sans-serif;
   --f-mono:"JetBrains Mono", "Droid Sans Mono", ui-monospace, Menlo, Consolas, monospace;
-  --r:10px; color-scheme:light;
+  --r:14px; color-scheme:light;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --paper:#0f1620; --sheet:#17212d; --grid:#1c2734; --ink:#e6edf4; --ink-2:#9db0c2; --rule:#2a394a;
-  --accent:#7ea1ff; --accent-soft:#1e2c4d; --on-accent:#0c1424;
-  --good:#5fd09a; --good-soft:#17352a; --warn:#f0b35a; --warn-soft:#3a2d16; --bad:#ff8a80; --bad-soft:#3d1d1b; color-scheme:dark}}
+  --paper:#090d16; --sheet:#131b2e; --grid:#1e293b; --ink:#f8fafc; --ink-2:#94a3b8; --rule:#334155;
+  --accent:#3b82f6; --accent-soft:#172554; --on-accent:#ffffff;
+  --good:#10b981; --good-soft:#064e3b; --warn:#f59e0b; --warn-soft:#451a03; --bad:#ef4444; --bad-soft:#450a0a; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --paper:#0f1620; --sheet:#17212d; --grid:#1c2734; --ink:#e6edf4; --ink-2:#9db0c2; --rule:#2a394a;
-  --accent:#7ea1ff; --accent-soft:#1e2c4d; --on-accent:#0c1424;
-  --good:#5fd09a; --good-soft:#17352a; --warn:#f0b35a; --warn-soft:#3a2d16; --bad:#ff8a80; --bad-soft:#3d1d1b; color-scheme:dark}
+  --paper:#090d16; --sheet:#131b2e; --grid:#1e293b; --ink:#f8fafc; --ink-2:#94a3b8; --rule:#334155;
+  --accent:#3b82f6; --accent-soft:#172554; --on-accent:#ffffff;
+  --good:#10b981; --good-soft:#064e3b; --warn:#f59e0b; --warn-soft:#451a03; --bad:#ef4444; --bad-soft:#450a0a; color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{height:100%;margin:0}
 body{direction:rtl;font-family:var(--f-body);color:var(--ink);font-size:15px;line-height:1.7;
   background:var(--paper);
-  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
-  background-size:24px 24px;padding-top:env(safe-area-inset-top,0px);-webkit-tap-highlight-color:transparent}
-.wrap{max-width:560px;margin:0 auto;padding-inline:16px;padding-block:14px 110px;display:flex;flex-direction:column;gap:14px}
+  background-image:radial-gradient(var(--grid) 1px,transparent 1px);
+  background-size:20px 20px;padding-top:env(safe-area-inset-top,0px);-webkit-tap-highlight-color:transparent}
+.wrap{max-width:600px;margin:0 auto;padding-inline:16px;padding-block:14px 115px;display:flex;flex-direction:column;gap:14px}
 header.top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-h1{font-size:22px;font-weight:800;margin:0;letter-spacing:-.2px}
+.brand{display:flex;align-items:baseline;gap:8px}
+h1{font-size:22px;font-weight:900;margin:0;letter-spacing:-.3px}
+.verbadge{font-size:11px;font-weight:800;background:var(--accent-soft);color:var(--accent);padding:2px 8px;border-radius:999px}
 .daytag{font-family:var(--f-mono);font-size:13px;color:var(--ink-2)}
 .daytag b{color:var(--accent);font-size:15px}
-.card{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:10px;min-width:0}
-.card h2{font-size:15px;font-weight:700;margin:0;display:flex;justify-content:space-between;align-items:center;gap:8px}
-.label{font-size:12px;color:var(--ink-2);letter-spacing:.2px}
+.card{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:15px;display:flex;flex-direction:column;gap:10px;min-width:0;box-shadow:0 1px 3px rgba(0,0,0,0.02)}
+.card h2{font-size:15.5px;font-weight:800;margin:0;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.label{font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:.2px}
 .mono{font-family:var(--f-mono);direction:ltr;unicode-bidi:isolate;text-align:left}
-.lab{font-size:17px;font-weight:700;line-height:1.6;text-wrap:balance}
+.lab{font-size:17px;font-weight:800;line-height:1.6;text-wrap:balance;color:var(--ink)}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .grow{flex:1;min-width:0}
 label{display:flex;flex-direction:column;gap:2px}
 label.row{flex-direction:row}
-button{font:inherit;font-weight:600;border-radius:8px;border:1px solid var(--rule);background:var(--sheet);color:var(--ink);padding:9px 14px;cursor:pointer;min-height:42px}
+button{font:inherit;font-weight:700;border-radius:10px;border:1px solid var(--rule);background:var(--sheet);color:var(--ink);padding:9px 14px;cursor:pointer;min-height:44px;transition:all 0.15s ease}
+button:active{transform:scale(0.98)}
 button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 button.ghost{background:transparent}
 button.danger{color:var(--bad);border-color:var(--bad);background:transparent}
-button.small{min-height:32px;padding:4px 10px;font-size:13px}
+button.small{min-height:34px;padding:4px 11px;font-size:13px}
 button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 button:disabled{opacity:.5;cursor:default}
-input,select,textarea{font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:8px 10px;min-height:42px;width:100%}
-.timer{font-family:var(--f-mono);font-size:56px;font-weight:600;text-align:center;letter-spacing:1px;direction:ltr;font-variant-numeric:tabular-nums;line-height:1.1}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:9px 12px;min-height:44px;width:100%}
+.timer{font-family:var(--f-mono);font-size:58px;font-weight:700;text-align:center;letter-spacing:1px;direction:ltr;font-variant-numeric:tabular-nums;line-height:1.1;margin-block:4px}
 .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .seg button{padding:6px 4px;font-size:13px}
 .seg button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
-.pill{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;border-radius:999px;padding:2px 10px;white-space:nowrap}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:800;border-radius:999px;padding:3px 10px;white-space:nowrap}
 .pill.good{background:var(--good-soft);color:var(--good)}
 .pill.warn{background:var(--warn-soft);color:var(--warn)}
 .pill.bad{background:var(--bad-soft);color:var(--bad)}
 .pill.info{background:var(--accent-soft);color:var(--accent)}
-.syncbtn{min-height:34px;padding:3px 12px;font-size:12.5px;border-radius:999px;display:inline-flex;gap:6px;align-items:center}
+.syncbtn{min-height:36px;padding:4px 14px;font-size:13px;border-radius:999px;display:inline-flex;gap:6px;align-items:center}
 .syncbtn.dirty{background:var(--warn-soft);color:var(--warn);border-color:var(--warn)}
 .syncbtn.clean{background:var(--good-soft);color:var(--good);border-color:transparent}
-.syncbtn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
-.banner{border-radius:var(--r);padding:12px 14px;font-weight:600}
+.syncbtn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2}
+.banner{border-radius:var(--r);padding:12px 14px;font-weight:700}
 .banner.warn{background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn)}
 .banner.info{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent)}
 .list{display:flex;flex-direction:column}
-.item{display:flex;gap:10px;align-items:flex-start;padding-block:9px;border-top:1px dashed var(--rule)}
+.item{display:flex;gap:10px;align-items:flex-start;padding-block:10px;border-top:1px dashed var(--rule)}
 .item:first-child{border-top:0}
-.item .num{font-family:var(--f-mono);font-size:12px;color:var(--ink-2);min-width:56px;padding-top:3px;direction:ltr;text-align:right}
+.item .num{font-family:var(--f-mono);font-size:12.5px;color:var(--ink-2);min-width:58px;padding-top:3px;direction:ltr;text-align:right}
 .item .t{flex:1;min-width:0;overflow-wrap:anywhere}
 .item.done .t{color:var(--ink-2);text-decoration:line-through;text-decoration-color:var(--rule)}
-.item.today{background:var(--accent-soft);border-radius:8px;padding-inline:8px}
-.chk{width:22px;height:22px;min-height:0;padding:0;accent-color:var(--accent);margin-top:4px;flex:none}
+.item.today{background:var(--accent-soft);border-radius:10px;padding-inline:10px}
+.chk{width:22px;height:22px;min-height:0;padding:0;accent-color:var(--accent);margin-top:4px;flex:none;cursor:pointer}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.stat{background:var(--paper);border-radius:8px;padding:8px 10px}
-.stat .v{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
-.stat .k{font-size:11.5px;color:var(--ink-2)}
+.stat{background:var(--paper);border-radius:10px;padding:9px 12px}
+.stat .v{font-size:22px;font-weight:900;font-variant-numeric:tabular-nums}
+.stat .k{font-size:11.5px;color:var(--ink-2);font-weight:600}
 .week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;align-items:end;height:120px;padding-top:6px}
 .bar{display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end}
-.bar i{display:block;width:100%;max-width:30px;border-radius:5px 5px 2px 2px;background:var(--accent);min-height:3px}
+.bar i{display:block;width:100%;max-width:30px;border-radius:6px 6px 2px 2px;background:var(--accent);min-height:4px}
 .bar i.zero{background:var(--rule)}
 .bar i.floor{background:var(--warn)}
 .bar small{font-size:11px;color:var(--ink-2)}
-.bar.is-today small{color:var(--accent);font-weight:800}
+.bar.is-today small{color:var(--accent);font-weight:900}
 .gate{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding-block:8px;border-top:1px dashed var(--rule)}
 .gate:first-of-type{border-top:0}
-.gate .d{font-family:var(--f-mono);font-weight:600;background:var(--paper);border-radius:6px;padding:2px 8px;font-size:13px}
+.gate .d{font-family:var(--f-mono);font-weight:700;background:var(--paper);border-radius:6px;padding:2px 8px;font-size:13px}
 .rules ol{margin:0;padding-inline-start:20px;display:flex;flex-direction:column;gap:8px}
-.rules li::marker{font-weight:800;color:var(--accent)}
-.summary{white-space:pre-wrap;background:var(--paper);border-radius:8px;padding:10px;font-size:13.5px;max-height:260px;overflow:auto}
-.synclog{font-size:13px;color:var(--ink-2);background:var(--paper);border-radius:8px;padding:8px 10px;overflow-wrap:anywhere}
+.rules li::marker{font-weight:900;color:var(--accent)}
+.summary{white-space:pre-wrap;background:var(--paper);border-radius:10px;padding:12px;font-size:13.5px;max-height:260px;overflow:auto}
+.synclog{font-size:13px;color:var(--ink-2);background:var(--paper);border-radius:10px;padding:10px 12px;overflow-wrap:anywhere}
 .synclog.err{color:var(--bad);background:var(--bad-soft)}
 .synclog.ok{color:var(--good);background:var(--good-soft)}
 nav.tabs{position:fixed;inset-inline:0;bottom:0;background:var(--sheet);border-top:1px solid var(--rule);
-  padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));display:grid;grid-template-columns:repeat(5,1fr);gap:4px;z-index:5}
-nav.tabs button{border:0;background:transparent;min-height:48px;font-size:12px;padding:4px 2px;color:var(--ink-2);display:flex;flex-direction:column;align-items:center;gap:2px;border-radius:8px}
-nav.tabs button svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
-nav.tabs button[aria-selected="true"]{color:var(--accent);background:var(--accent-soft)}
+  padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));display:grid;grid-template-columns:repeat(6,1fr);gap:2px;z-index:5}
+nav.tabs button{border:0;background:transparent;min-height:50px;font-size:11px;padding:3px 1px;color:var(--ink-2);display:flex;flex-direction:column;align-items:center;gap:2px;border-radius:8px}
+nav.tabs button svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.9}
+nav.tabs button[aria-selected="true"]{color:var(--accent);background:var(--accent-soft);font-weight:800}
 .muted{color:var(--ink-2);font-size:13px}
 .empty{color:var(--ink-2);font-size:13.5px;padding:6px 0}
-.toast{position:fixed;inset-inline:16px;bottom:calc(84px + env(safe-area-inset-bottom,0px));margin-inline:auto;max-width:420px;background:var(--ink);color:var(--paper);padding:10px 14px;border-radius:8px;font-size:14px;text-align:center;z-index:9}
-summary{cursor:pointer;font-weight:700}
-span.mono{white-space:nowrap}
+.toast{position:fixed;inset-inline:16px;bottom:calc(88px + env(safe-area-inset-bottom,0px));margin-inline:auto;max-width:420px;background:var(--ink);color:var(--paper);padding:11px 16px;border-radius:10px;font-size:14px;font-weight:700;text-align:center;z-index:9;box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+summary{cursor:pointer;font-weight:800}
+
+/* Runbook guide boxes */
+.guide-card{background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:12px;margin-top:6px;font-size:13.5px}
+.guide-card h3{margin:0 0 6px 0;font-size:14px;color:var(--accent);display:flex;align-items:center;gap:6px}
+.code-block{background:var(--sheet);border:1px solid var(--rule);border-radius:8px;padding:8px 10px;font-family:var(--f-mono);font-size:12.5px;direction:ltr;text-align:left;overflow-x:auto;margin-block:6px}
+
+/* Calendar widget */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;margin-top:8px}
+.cal-head{font-size:12px;font-weight:800;color:var(--ink-2);padding-bottom:4px}
+.cal-cell{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:8px;border:1px solid transparent;font-size:13px;font-weight:700;cursor:pointer;position:relative}
+.cal-cell.empty{cursor:default;opacity:.2}
+.cal-cell.today{border-color:var(--accent);color:var(--accent)}
+.cal-cell.has-session{background:var(--good-soft);color:var(--good);border-color:var(--good)}
+.cal-cell.has-streak{background:var(--accent-soft);color:var(--accent)}
+.cal-cell.gate-day::after{content:"★";position:absolute;top:1px;right:2px;font-size:8px;color:var(--warn)}
 </style>
 </head>
 <body>
 <div class="wrap" id="app">
   <header class="top">
-    <div>
+    <div class="brand">
       <h1>دفتر آزمایشگاه</h1>
-      <div class="daytag" id="daytag">در حال بارگذاری…</div>
+      <span class="verbadge">v1.1</span>
     </div>
+    <div class="daytag" id="daytag">در حال بارگذاری…</div>
     <button class="syncbtn clean" id="syncTop" aria-label="Commit به GitHub">
       <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span id="syncTopTxt">همگام</span>
     </button>
   </header>
   <div id="status" class="banner info" hidden></div>
 
-  <!-- TODAY -->
+  <!-- 1. TODAY -->
   <section data-view="today" class="view" style="display:flex;flex-direction:column;gap:14px">
     <div id="pauseBanner" class="banner warn" hidden></div>
     <div class="card">
-      <span class="label">تمرین امروز</span>
-      <div class="lab" id="todayLab">برنامه هنوز خالی است. از برگهٔ «برنامه» یک تمرین اضافه کن.</div>
+      <span class="label">تمرین امروز (قانون ۱: اولین خط انجام‌نشده)</span>
+      <div class="lab" id="todayLab">برنامه در حال بارگذاری…</div>
       <div class="row" id="todayLabActions" hidden>
-        <button class="small" id="markLabDone">این تمرین انجام شد</button>
+        <button class="small primary" id="markLabDone">این تمرین انجام شد ✓</button>
+        <button class="small ghost" id="openTodayGuide">راهنمای سناریو 📖</button>
       </div>
+      <div id="todayGuideBox" hidden></div>
     </div>
 
     <div class="card">
@@ -169,7 +188,33 @@ span.mono{white-space:nowrap}
     </div>
   </section>
 
-  <!-- PROGRESS -->
+  <!-- 2. RUNBOOK / GUIDES (NEW IN v1.1) -->
+  <section data-view="guide" class="view" hidden style="display:flex;flex-direction:column;gap:14px">
+    <div class="card">
+      <h2>راهنمای سناریوهای روزانه (Runbook)</h2>
+      <div class="muted">دستورات سناریوی شبیه‌سازی خرابی، عیب‌یابی، رفع و سوالات کلیدی برای هر روز:</div>
+      <div id="guidesAccordion" class="list"></div>
+    </div>
+  </section>
+
+  <!-- 3. CALENDAR (NEW IN v1.1) -->
+  <section data-view="calendar" class="view" hidden style="display:flex;flex-direction:column;gap:14px">
+    <div class="card">
+      <h2>تقویم ۹۰ روزه آزمایشگاه <span class="pill info" id="calCurrentMonth"></span></h2>
+      <div class="muted">روزهای سبز: جلسه برگزار شده. ستاره ★: روز دروازه.</div>
+      <div class="cal-grid" id="calHead">
+        <span class="cal-head">ش</span><span class="cal-head">ی</span><span class="cal-head">د</span>
+        <span class="cal-head">س</span><span class="cal-head">چ</span><span class="cal-head">پ</span><span class="cal-head">ج</span>
+      </div>
+      <div class="cal-grid" id="calBody"></div>
+    </div>
+    <div class="card">
+      <h2>جزئیات روز انتخابی</h2>
+      <div id="calDayDetails" class="muted">روی یکی از روزهای تقویم بزن تا جلسات و تمرین‌هایش را ببینی.</div>
+    </div>
+  </section>
+
+  <!-- 4. PROGRESS -->
   <section data-view="progress" class="view" hidden style="display:flex;flex-direction:column;gap:14px">
     <div class="card">
       <h2>این هفته <span class="muted" id="weekRange"></span></h2>
@@ -193,7 +238,7 @@ span.mono{white-space:nowrap}
     </div>
   </section>
 
-  <!-- INC -->
+  <!-- 5. INC -->
   <section data-view="incs" class="view" hidden style="display:flex;flex-direction:column;gap:14px">
     <div class="card">
       <h2>INC جدید</h2>
@@ -215,27 +260,11 @@ span.mono{white-space:nowrap}
     </div>
   </section>
 
-  <!-- PLAN -->
-  <section data-view="plan" class="view" hidden style="display:flex;flex-direction:column;gap:14px">
-    <div class="card">
-      <h2>next.txt <span class="muted">از ساده به سخت</span></h2>
-      <div class="list" id="planList"><div class="empty">برنامه خالی است.</div></div>
-    </div>
-    <details class="card">
-      <summary>افزودن تمرین</summary>
-      <div class="row">
-        <label style="width:96px"><span class="label">روز</span><input id="pDay" type="number" min="1" inputmode="numeric"></label>
-        <label class="grow"><span class="label">تمرین</span><input id="pTitle"></label>
-      </div>
-      <button id="pAdd" class="primary">افزودن</button>
-    </details>
-  </section>
-
-  <!-- RULES + SETTINGS + SYNC -->
+  <!-- 6. RULES + SETTINGS + SYNC -->
   <section data-view="rules" class="view" hidden style="display:flex;flex-direction:column;gap:14px">
     <div class="card" id="syncCard">
       <h2>همگام‌سازی با GitHub <span class="pill" id="syncPill"></span></h2>
-      <div class="muted">داده‌ها روی همین گوشی ذخیره می‌شوند. با «Commit» فایل‌های <span class="mono">logs/sessions.md</span>، <span class="mono">logs/incs.md</span> و <span class="mono">logs/lab-data.json</span> در ریپو به‌روز می‌شوند. فایل‌های INC-xxx.md خودت دست نمی‌خورند.</div>
+      <div class="muted">داده‌ها روی همین گوشی ذخیره می‌شوند. با «Commit» فایل‌های <span class="mono">logs/sessions.md</span>، <span class="mono">logs/incs.md</span> و <span class="mono">logs/lab-data.json</span> در ریپو به‌روز می‌شوند.</div>
       <label><span class="label">ریپو</span><input id="cRepo" class="mono" placeholder="https://github.com/owner/repo" autocomplete="off"></label>
       <div class="row">
         <label class="grow"><span class="label">شاخه (خالی = پیش‌فرض ریپو)</span><input id="gBranch" class="mono" placeholder="main" autocomplete="off"></label>
@@ -253,22 +282,13 @@ span.mono{white-space:nowrap}
         <button class="grow" id="gRestore">بازیابی از GitHub</button>
       </div>
       <div class="synclog" id="syncLog">هنوز commit نشده.</div>
-      <details>
-        <summary class="muted">توکن را چطور بسازم؟</summary>
-        <ol class="muted" style="margin:6px 0 0;padding-inline-start:18px">
-          <li>GitHub › Settings › Developer settings › Personal access tokens › <b>Fine-grained tokens</b> › Generate new token</li>
-          <li>Repository access: <b>Only select repositories</b> › فقط <span class="mono">infrastructure-lab</span></li>
-          <li>Permissions › Repository › <b>Contents: Read and write</b> (بقیه را دست نزن)</li>
-          <li>مدت اعتبار را مثلاً ۹۰ روز بگذار، توکن را کپی کن و اینجا بچسبان.</li>
-        </ol>
-      </details>
     </div>
     <div class="card rules">
       <h2>پنج قانون</h2>
       <ol>
         <li><b>روز ۱۵ جلسهٔ تصمیم ندارد.</b> next.txt را باز کن و خط اول را اجرا کن.</li>
-        <li><b>نردبان گیر کردن:</b> ۲۰ دقیقه = متن دقیق خطا را بپرس (راهنمایی، نه جواب). ۶۰ دقیقه = در INC بنویس BLOCKED و برو سراغ تمرین ساده‌تر.</li>
-        <li><b>کف و مکث:</b> ۱۰ دقیقه + یک دستور + یک commit هم حساب است. هفتهٔ از دست رفته = مکث حداکثر ۲ هفته با تاریخ شروع مشخص. جبران و احساس گناه نه.</li>
+        <li><b>نردبان گیر کردن:</b> ۲۰ دقیقه = متن دقیق خطا را بپرس. ۶۰ دقیقه = در INC بنویس BLOCKED.</li>
+        <li><b>کف و مکث:</b> ۱۰ دقیقه + یک دستور + یک commit هم حساب است. هفتهٔ از دست رفته = مکث حداکثر ۲ هفته.</li>
         <li><b>تا روز ۹۰ برنامهٔ جدید نه.</b> فکر برنامه‌ریزی برود به پارکینگ؛ فقط سر دروازه‌ها باز می‌شود.</li>
         <li><b>یک نفر مشخص:</b> هر جمعه خلاصه برایش می‌رود.</li>
       </ol>
@@ -289,11 +309,13 @@ span.mono{white-space:nowrap}
   </section>
 </div>
 
+<!-- Bottom Navigation: 6 tabs -->
 <nav class="tabs" role="tablist" aria-label="بخش‌ها">
   <button role="tab" data-tab="today" aria-selected="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg>امروز</button>
+  <button role="tab" data-tab="guide" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg>راهنما</button>
+  <button role="tab" data-tab="calendar" aria-selected="false"><svg viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>تقویم</button>
   <button role="tab" data-tab="progress" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>پیشرفت</button>
   <button role="tab" data-tab="incs" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M7 9l3 3-3 3M12 15h5"/></svg>INC</button>
-  <button role="tab" data-tab="plan" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>برنامه</button>
   <button role="tab" data-tab="rules" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg>قوانین</button>
 </nav>
 <div class="toast" id="toast" hidden></div>
@@ -301,7 +323,7 @@ span.mono{white-space:nowrap}
 <script>
 (function(){
 'use strict';
-const APP_VERSION='1.0';
+const APP_VERSION='1.1';
 const $=id=>document.getElementById(id);
 const fa=n=>Number(n).toLocaleString('fa-IR');
 const pad=n=>String(n).padStart(2,'0');
@@ -316,7 +338,59 @@ const weekdayFa=d=>{try{return d.toLocaleDateString('fa-IR',{weekday:'narrow'});
 const ls={get(k){try{return localStorage.getItem(k);}catch(e){return null;}},set(k,v){try{localStorage.setItem(k,v);}catch(e){}},del(k){try{localStorage.removeItem(k);}catch(e){}}};
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
 
-/* ---------- durable storage: Capacitor Preferences (native SharedPreferences) + localStorage mirror ---------- */
+/* Built-in Runbooks for lab days (detailed break/diagnose/fix guidance) */
+const RUNBOOKS = {
+  1: {
+    title: "INC-000: خروجی پایه سیستم",
+    scenario: "در اولین مواجهه با هر سرور لینوکس جدید، باید مشخصات سخت‌افزاری، پارتیشن‌ها و شبکه ثبت شود.",
+    cmd: "uname -a\ndf -h\nip a\nlsblk",
+    fix: "خروجی‌ها را مستقیماً در گزارش INC کپی کن. خطاهای تایپی مثل de -h را به عنوان تجربه لاگ کن.",
+    question: "آیا در خروجی ip a وضعیت اینترفیس UP است یا DOWN؟ MTU آن چقدر است؟"
+  },
+  2: {
+    title: "INC-001: فایل با مجوز 000 (Permission Denied)",
+    scenario: "فایلی وجود دارد که هیچ مجوزی حتی برای خواندن ندارد. کاربر عادی و روت چطور با آن برخورد می‌کنند؟",
+    cmd: "mkdir ~/lab && echo 'hello' > ~/lab/report.txt\nchmod 000 ~/lab/report.txt\ncat ~/lab/report.txt",
+    fix: "ls -l ~/lab/report.txt; stat ~/lab/report.txt\nchmod 644 ~/lab/report.txt\ncat ~/lab/report.txt # verified",
+    question: "چرا دستور sudo cat حتی با دسترسی 000 می‌تواند فایل را بخواند؟ (مفهوم روت در DAC لینوکس)"
+  },
+  3: {
+    title: "نصب اوبونتو سرور روی VMware و ارتباط SSH",
+    scenario: "راه‌اندازی ماشین مجازی استاندارد برای سناریوهایی که روی Killercoda اجرا نمی‌شوند (مثل GRUB و fstab).",
+    cmd: "ip a # پیدا کردن IP ماشین\nsudo systemctl status ssh",
+    fix: "از PowerShell ویندوز متصل شو:\nssh user@<VM-IP>\nسپس در VMware یک Snapshot به نام 'clean' بگیر.",
+    question: "تفاوت کارت شبکه در حالت NAT و Bridged در ارتباط SSH از ویندوز چیست؟"
+  },
+  4: {
+    title: "سرویس متوقف‌شده: systemctl و journalctl",
+    scenario: "سرویسی Fail یا Stop شده و سرویس وابسته کار نمی‌کند.",
+    cmd: "sudo systemctl stop ssh\nsudo systemctl status ssh",
+    fix: "sudo systemctl start ssh\njournalctl -u ssh -n 20 --no-pager",
+    question: "تفاوت وضعیت inactive (dead) با failed در خروجی systemctl چیست؟"
+  },
+  8: {
+    title: "فایل حذف‌شده ولی باز (Open Deleted File)",
+    scenario: "دیسک پر است اما با du فایلی پیدا نمی‌شود؛ چون پروسسی فایل حذف‌شده را باز نگه داشته است.",
+    cmd: "truncate -s 1G /tmp/disk.img && mkfs.ext4 -q /tmp/disk.img\nsudo mkdir -p /mnt/lab && sudo mount -o loop /tmp/disk.img /mnt/lab\nsudo dd if=/dev/zero of=/mnt/lab/app.log bs=1M count=900\nsudo sh -c 'nohup sleep infinity < /mnt/lab/app.log >/dev/null 2>&1 &'\nsudo rm /mnt/lab/app.log",
+    fix: "df -h /mnt/lab # پر است\nsudo du -sh /mnt/lab # خالی است!\nsudo lsof +L1\n# حل: کشتن پروسس با kill یا خالی کردن: sudo truncate -s 0 /proc/<PID>/fd/<FD>",
+    question: "تفاوت df (که inode/blocks دیسک را می‌شمارد) با du (که جدول فایل‌ها را پیمایش می‌کند) چیست؟"
+  },
+  9: {
+    title: "خرابی fstab و ورود به Emergency Mode",
+    scenario: "یک UUID اشتباه در fstab باعث می‌شود ماشین در زمان بوت متوقف شود.",
+    cmd: "sudo cp /etc/fstab /root/fstab.bak\necho 'UUID=deadbeef-0000-0000-0000-000000000000 /data ext4 defaults 0 2' | sudo tee -a /etc/fstab\nsudo reboot",
+    fix: "در Emergency Mode روت شوید:\nmount -o remount,rw /\nnano /etc/fstab # حذف خط اشتباه\nfindmnt --verify\nmount -a && reboot",
+    question: "چرا پارامتر nofail در fstab مانع از توقف بوت سیستم در درایوهای غیراصلی می‌شود؟"
+  },
+  10: {
+    title: "ریکاوری پسورد/فایل از GRUB با init=/bin/bash",
+    scenario: "وقتی پسورد روت فراموش شده یا سیستم بالا نمی‌آید، تزریق مستقیم شل بش در کرنل.",
+    cmd: "در منوی GRUB دکمه e را بزن. خط linux را پیدا کن. انتهای آن بنویس: rw init=/bin/bash سپس Ctrl+X",
+    fix: "mount -o remount,rw /\npasswd root # یا تعمیر فایل‌ها\nsync\nreboot -f",
+    question: "چرا وقتی با init=/bin/bash وارد سیستم می‌شویم دستورات systemctl و journalctl کار نمی‌کنند؟"
+  }
+};
+
 const Pref=(window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.Preferences)||null;
 const store={
   async get(k){let v=null;if(Pref){try{v=(await Pref.get({key:k})).value;}catch(e){}}if(v==null)v=ls.get(k);return v;},
@@ -324,7 +398,6 @@ const store={
   async del(k){ls.del(k);if(Pref){try{await Pref.remove({key:k});}catch(e){}}}
 };
 
-/* ---------- seed: data moved over from the web version (4 Oct 2026) ---------- */
 const SEED={
   config:{startDate:'2026-10-04',buddy:'',slot:'',repo:'https://github.com/alimhbtwenty/infrastructure-lab',pausedUntil:null},
   plan:[
@@ -359,7 +432,10 @@ const SEED={
     {day:29,done:false,title:'Bash: ۱۰ IP پرتکرار از لاگ nginx (awk/sort/uniq)'},
     {day:30,done:false,title:'استراحت / مرور + بازسازی یک INC'}
   ],
-  sessions:[{_id:'s-2026-10-04-first',date:'2026-10-04',minutes:20,note:'INC-000 — از روی زمان commitها',ts:1791084874000}],
+  sessions:[
+    {_id:'s-2026-10-04-first',date:'2026-10-04',minutes:20,note:'INC-000 — از روی زمان commitها',ts:1791084874000},
+    {_id:'s-muuee78q',date:'2026-10-05',minutes:45,note:'INC-001',ts:1791153242666}
+  ],
   incs:[{_id:'inc-000',num:0,title:'Lab setup (Killercoda baseline)',date:'2026-10-04',status:'done',verified:true,rebroken:false}],
   parking:[]
 };
@@ -370,23 +446,25 @@ const GH={token:'',branch:''};
 function cfg(){return Object.assign({startDate:'2026-10-04',buddy:'',slot:'',repo:'',pausedUntil:null},S.config||{});}
 function today(){return new Date();}
 function dayN(){return diffDays(today(),parse(cfg().startDate))+1;}
-function weekStart(d){const x=parse(iso(d));const back=(x.getDay()+1)%7;return addDays(x,-back);} // Iranian week: Sat..Fri
+function weekStart(d){const x=parse(iso(d));const back=(x.getDay()+1)%7;return addDays(x,-back);}
 
 let toastT;function toast(m){const t=$('toast');t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,2800);}
 
 function snapshot(){return {config:S.config,plan:S.plan,sessions:S.sessions,incs:S.incs,parking:S.parking,pending:S.pending,lastSync:S.lastSync};}
 async function persist(){await store.set(DATA_KEY,JSON.stringify(snapshot()));}
-async function commitLocal(fn,msg){ // every user change goes through here
+async function commitLocal(fn,msg){
   fn();S.pending=(S.pending||0)+1;render();await persist();if(msg)toast(msg);
 }
 
-/* ---------- tabs ---------- */
-function show(tab){document.querySelectorAll('.view').forEach(v=>v.hidden=v.dataset.view!==tab);
-  document.querySelectorAll('nav.tabs button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===tab)));ls.set('lab.tab',tab);window.scrollTo(0,0);}
+function show(tab){
+  document.querySelectorAll('.view').forEach(v=>v.hidden=v.dataset.view!==tab);
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===tab)));
+  ls.set('lab.tab',tab);window.scrollTo(0,0);
+}
 document.querySelectorAll('nav.tabs button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));
 show(ls.get('lab.tab')||'today');
 
-/* ---------- timer (timestamps, so it survives the app going to background) ---------- */
+/* Timer */
 let len=Number(ls.get('lab.len')||45);
 function setLen(n){len=n;ls.set('lab.len',String(n));['45','20','10'].forEach(k=>$('len'+k).setAttribute('aria-pressed',String(Number(k)===n)));if(!running())$('timer').textContent=pad(n)+':00';}
 ['45','20','10'].forEach(k=>$('len'+k).addEventListener('click',()=>{if(!running())setLen(Number(k));}));
@@ -421,7 +499,7 @@ $('stuckBtn').addEventListener('click',()=>{if(ls.get('lab.stuck')){ls.del('lab.
 if(ls.get('lab.stuck'))$('stuckBtn').textContent='حل شد';
 setLen(len);syncTimerUI();setInterval(tick,1000);
 
-/* ---------- writes (local) ---------- */
+/* Writes */
 function guard(){if(!S.ready){toast('هنوز بارگذاری نشده');return false;}return true;}
 async function addSession(date,minutes,note){
   if(!guard())return false;const ts=Date.now();
@@ -433,8 +511,6 @@ $('mSave').addEventListener('click',async()=>{const m=Number($('mMin').value);if
   if(await addSession($('mDate').value||iso(today()),m,$('mNote').value.trim()))$('mNote').value='';});
 function savePlan(items,msg){if(!guard())return;return commitLocal(()=>{S.plan=items;},msg);}
 $('markLabDone').addEventListener('click',()=>{const it=currentLab();if(!it)return;savePlan(S.plan.map(p=>p===it?Object.assign({},p,{done:true}):p),'تمرین علامت خورد');});
-$('pAdd').addEventListener('click',()=>{const d=Number($('pDay').value),t=$('pTitle').value.trim();if(!(d>0)||!t){toast('روز و تمرین را بنویس');return;}
-  savePlan(S.plan.concat([{day:d,title:t,done:false}]).sort((a,b)=>a.day-b.day),'اضافه شد');$('pTitle').value='';});
 $('iSave').addEventListener('click',async()=>{if(!guard())return;const num=Number($('iNum').value),title=$('iTitle').value.trim();
   if(!($('iNum').value!=='' && num>=0)||!title){toast('شماره و عنوان را بنویس');return;}
   const id='inc-'+pad3(num);const prev=S.incs.find(i=>i._id===id);
@@ -449,27 +525,28 @@ $('pauseBtn').addEventListener('click',()=>{if(!guard())return;const until=iso(a
   commitLocal(()=>{S.config=Object.assign({},cfg(),{pausedUntil:until});},'مکث تا '+faDate(until));});
 $('resumeBtn').addEventListener('click',()=>{if(!guard())return;commitLocal(()=>{S.config=Object.assign({},cfg(),{pausedUntil:null});},'مکث تمام شد. یک جلسهٔ ۱۵ دقیقه‌ای کافی است.');});
 $('copySum').addEventListener('click',async()=>{const txt=$('summary').textContent;
-  try{await navigator.clipboard.writeText(txt);toast('کپی شد');}catch(e){const r=document.createRange();r.selectNodeContents($('summary'));const s=getSelection();s.removeAllRanges();s.addRange(r);try{document.execCommand('copy');toast('کپی شد');}catch(_){toast('متن انتخاب شد؛ کپی کن');}}});
+  try{await navigator.clipboard.writeText(txt);toast('کپی شد');}catch(e){toast('کپی نشد');}});
 
-/* delete needs a second tap within 3s (no system dialogs) */
+/* Tap to delete */
 let armed=null,armT;
 function confirmTap(btn,label){if(armed===btn){armed=null;clearTimeout(armT);return true;}
   if(armed){armed.textContent=armed.dataset.orig;}armed=btn;btn.dataset.orig=btn.textContent;btn.textContent=label||'مطمئنی؟';
   clearTimeout(armT);armT=setTimeout(()=>{if(armed){armed.textContent=armed.dataset.orig;armed=null;}},3000);return false;}
 
 document.addEventListener('click',async e=>{
-  const t=e.target.closest('[data-del-s],[data-inc],[data-del-p],[data-del-i]');if(!t||!guard())return;
+  const t=e.target.closest('[data-del-s],[data-inc],[data-del-p],[data-del-i],[data-cal-date]');if(!t||!guard())return;
   if(t.dataset.delS){if(!confirmTap(t,'حذف؟'))return;await commitLocal(()=>{S.sessions=S.sessions.filter(s=>s._id!==t.dataset.delS);},'حذف شد');}
   else if(t.dataset.delP){if(!confirmTap(t,'حذف؟'))return;await commitLocal(()=>{S.parking=S.parking.filter(p=>p._id!==t.dataset.delP);});}
   else if(t.dataset.delI){if(!confirmTap(t,'حذف؟'))return;await commitLocal(()=>{S.incs=S.incs.filter(i=>i._id!==t.dataset.delI);},'INC حذف شد');}
   else if(t.dataset.inc){const f=t.dataset.f;await commitLocal(()=>{S.incs=S.incs.map(i=>i._id===t.dataset.inc?Object.assign({},i,{[f]:!i[f]}):i);});}
+  else if(t.dataset.calDate){showCalDetails(t.dataset.calDate);}
 });
-document.addEventListener('change',e=>{const t=e.target;if(t.dataset&&t.dataset.plan!==undefined){const ix=Number(t.dataset.plan);
-  savePlan(S.plan.map((p,i)=>i===ix?Object.assign({},p,{done:t.checked}):p));}});
 
-/* ---------- derived ---------- */
-function currentLab(){const n=dayN();const open=S.plan.filter(p=>!p.done);
-  return open.find(p=>p.day===n)||open.find(p=>p.day<n)||open.find(p=>p.day>n)||null;}
+/* Rule 1 Logic: Current lab is always the FIRST undone task */
+function currentLab(){
+  return S.plan.find(p=>!p.done)||null;
+}
+
 function byDate(){const m={};S.sessions.forEach(s=>{m[s.date]=(m[s.date]||0)+(Number(s.minutes)||0);});return m;}
 function sessionsIn(a,b){return S.sessions.filter(s=>s.date>=iso(a)&&s.date<=iso(b));}
 function weekStats(){const ws=weekStart(today());const we=addDays(ws,6);const ss=sessionsIn(ws,we);
@@ -480,25 +557,144 @@ function weeksOk(upToDay){
   return tot?ok/tot:null;}
 function gateInfo(){const n=dayN();const incAll=S.incs.length;const days=new Set(S.sessions.map(s=>s.date)).size;const ratio=weeksOk(Math.min(n,45));const reb=S.incs.filter(i=>i.rebroken).length;
   return [
-    {d:14,crit:'≥۴ INC و ≥۸ روز با جلسه',pass:incAll>=4&&days>=8,partial:'('+fa(incAll)+' INC، '+fa(days)+' روز)',en:'>=4 INCs and >=8 days with a session ('+incAll+' INCs, '+days+' days)'},
-    {d:45,crit:'≥۶ INC و ≥۷۰٪ هفته‌ها با ۳ جلسه؛ ریپو را به ۱–۳ نفر نشان بده',pass:incAll>=6&&ratio!==null&&ratio>=.7,partial:'('+fa(incAll)+' INC، '+(ratio===null?'—':fa(Math.round(ratio*100))+'٪')+')',en:'>=6 INCs and >=70% of weeks with 3 sessions ('+incAll+' INCs, '+(ratio===null?'n/a':Math.round(ratio*100)+'%')+')'},
-    {d:90,crit:'≥۱۰ INC که از ترمینال خالی دوباره ساخته شده‌اند',pass:reb>=10,partial:'('+fa(reb)+' بازسازی‌شده)',en:'>=10 INCs rebuilt from a blank terminal ('+reb+' rebuilt)'}
+    {d:14,crit:'≥۴ INC و ≥۸ روز با جلسه',pass:incAll>=4&&days>=8,partial:'('+fa(incAll)+' INC، '+fa(days)+' روز)',en:'>=4 INCs and >=8 days with a session'},
+    {d:45,crit:'≥۶ INC و ≥۷۰٪ هفته‌ها با ۳ جلسه',pass:incAll>=6&&ratio!==null&&ratio>=.7,partial:'('+fa(incAll)+' INC، '+(ratio===null?'—':fa(Math.round(ratio*100))+'٪')+')',en:'>=6 INCs and >=70% of weeks with 3 sessions'},
+    {d:90,crit:'≥۱۰ INC که از ترمینال خالی بازسازی شده‌اند',pass:reb>=10,partial:'('+fa(reb)+' بازسازی‌شده)',en:'>=10 INCs rebuilt from a blank terminal'}
   ];}
 
-/* ---------- render ---------- */
+/* Guide box rendering */
+function renderGuide(dayNum, boxId){
+  const g = RUNBOOKS[dayNum];
+  const box = $(boxId);
+  if(!box) return;
+  if(!g){
+    box.innerHTML = '<div class="guide-card"><div class="muted">راهنمای آماده برای این روز در ریپو بارگذاری نشده است. دستورات را در next.txt دنبال کن.</div></div>';
+    box.hidden = false;
+    return;
+  }
+  box.innerHTML = `
+    <div class="guide-card">
+      <h3>📖 سناریو: ${esc(g.title)}</h3>
+      <p style="margin:4px 0"><b>زمینه:</b> ${esc(g.scenario)}</p>
+      <div class="label">دستورات تست / شبیه‌سازی:</div>
+      <div class="code-block">${esc(g.cmd)}</div>
+      <div class="label">نحوه بررسی و رفع (Fix):</div>
+      <div class="code-block">${esc(g.fix)}</div>
+      <p style="margin:6px 0 0 0;color:var(--warn)"><b>سوال کلیدی برای گزارش:</b> ${esc(g.question)}</p>
+    </div>
+  `;
+  box.hidden = false;
+}
+
+$('openTodayGuide').addEventListener('click',()=>{
+  const box = $('todayGuideBox');
+  if(!box.hidden){ box.hidden = true; return; }
+  const it = currentLab();
+  if(it) renderGuide(it.day, 'todayGuideBox');
+});
+
+/* Calendar rendering */
+function renderCalendar(){
+  const c = cfg();
+  const st = parse(c.startDate);
+  const bd = byDate();
+  $('calCurrentMonth').textContent = faDateFull(iso(today()));
+  
+  // Render full 90-day interactive grid
+  let html = '';
+  // Empty spaces before start day of week
+  const firstDow = (st.getDay()+1)%7; // Sat=0
+  for(let i=0; i<firstDow; i++){
+    html += '<div class="cal-cell empty"></div>';
+  }
+  
+  for(let dayIdx=1; dayIdx<=90; dayIdx++){
+    const curDate = addDays(st, dayIdx-1);
+    const dateStr = iso(curDate);
+    const hasSess = (bd[dateStr]||0) > 0;
+    const isTod = dateStr === iso(today());
+    const isGate = [14, 45, 90].includes(dayIdx);
+    
+    let cls = 'cal-cell';
+    if(isTod) cls += ' today';
+    if(hasSess) cls += ' has-session';
+    if(isGate) cls += ' gate-day';
+    
+    html += `<div class="${cls}" data-cal-date="${dateStr}" title="روز ${fa(dayIdx)}: ${faDate(dateStr)}">${fa(dayIdx)}</div>`;
+  }
+  $('calBody').innerHTML = html;
+}
+
+function showCalDetails(dateStr){
+  const c = cfg();
+  const dayIndex = diffDays(parse(dateStr), parse(c.startDate)) + 1;
+  const ss = S.sessions.filter(s=>s.date===dateStr);
+  const inc = S.incs.filter(i=>i.date===dateStr);
+  const planItem = S.plan.find(p=>p.day===dayIndex);
+  
+  let h = `<h3>روز ${fa(dayIndex)} (${faDateFull(dateStr)})</h3>`;
+  if(planItem){
+    h += `<p><b>تمرین روز:</b> ${esc(planItem.title)} ${planItem.done?'<span class="pill good">انجام شده</span>':'<span class="pill warn">باقی‌مانده</span>'}</p>`;
+  }
+  if(ss.length){
+    h += `<div class="label">جلسات این روز:</div><ul>`;
+    ss.forEach(s=>{ h += `<li>${fa(s.minutes)} دقیقه ${s.note?' — '+esc(s.note):''}</li>`; });
+    h += `</ul>`;
+  } else {
+    h += `<p class="muted">در این روز هیچ جلسه‌ای ثبت نشده است.</p>`;
+  }
+  if(inc.length){
+    h += `<div class="label">INCهای ثبت‌شده:</div><ul>`;
+    inc.forEach(i=>{ h += `<li>INC-${pad3(i.num)}: ${esc(i.title)} (${i.status})</li>`; });
+    h += `</ul>`;
+  }
+  $('calDayDetails').innerHTML = h;
+}
+
+function renderGuidesTab(){
+  let h = '';
+  S.plan.forEach(p=>{
+    const g = RUNBOOKS[p.day];
+    h += `
+      <details class="item" style="display:block">
+        <summary style="display:flex;align-items:center;justify-content:space-between">
+          <span><b>روز ${fa(p.day)}:</b> ${esc(p.title)}</span>
+          <span class="pill ${p.done?'good':'info'}">${p.done?'انجام شده':'راهنما'}</span>
+        </summary>
+        ${g ? `
+          <div class="guide-card">
+            <p><b>سناریو:</b> ${esc(g.scenario)}</p>
+            <div class="label">دستورات تست:</div>
+            <div class="code-block">${esc(g.cmd)}</div>
+            <div class="label">روش حل (Fix):</div>
+            <div class="code-block">${esc(g.fix)}</div>
+            <p style="color:var(--warn)"><b>نکته/سوال:</b> ${esc(g.question)}</p>
+          </div>
+        ` : `<div class="guide-card muted">راهنمای تفصیلی برای این روز هنوز بارگذاری نشده است.</div>`}
+      </details>
+    `;
+  });
+  $('guidesAccordion').innerHTML = h;
+}
+
+/* Main render */
 function render(){
   const c=cfg(),n=dayN();
   $('daytag').innerHTML='روز <b>'+fa(Math.max(n,0))+'</b> از ۹۰'+(c.slot?' · '+esc(c.slot):'');
   const paused=c.pausedUntil && c.pausedUntil>=iso(today());
   $('pauseBanner').hidden=!paused;$('resumeBtn').hidden=!paused;$('pauseBtn').hidden=!!paused;
   if(paused)$('pauseBanner').textContent='مکث است، نه شکست. شروع دوباره: '+faDate(c.pausedUntil)+' با یک جلسهٔ ۱۵ دقیقه‌ای.';
+  
   const lab=currentLab();
-  $('todayLab').textContent=lab?('روز '+fa(lab.day)+' — '+lab.title):(S.plan.length?'همهٔ تمرین‌های برنامه انجام شده. روز دروازه است؛ برگهٔ «پیشرفت» را ببین.':'برنامه هنوز خالی است. از برگهٔ «برنامه» یک تمرین اضافه کن.');
+  $('todayLab').textContent=lab?('روز '+fa(lab.day)+' — '+lab.title):(S.plan.length?'همهٔ تمرین‌های برنامه انجام شده. روز دروازه است.':'برنامه هنوز خالی است.');
   $('todayLabActions').hidden=!lab;
+  
   const w=weekStats();const pill=$('weekPill');
   pill.textContent=fa(Math.min(w.count,99))+' از ۳ جلسهٔ این هفته';pill.className='pill '+(w.count>=3?'good':w.count>0?'info':'warn');
+  
   const rec=S.sessions.slice().sort((a,b)=>(b.date+pad3(0)+b.ts)>(a.date+pad3(0)+a.ts)?1:-1).slice(0,8);
   $('recent').innerHTML=rec.length?rec.map(s=>'<div class="item"><span class="num">'+esc(faDate(s.date))+'</span><span class="t">'+fa(s.minutes)+' دقیقه'+(s.note?' · '+esc(s.note):'')+'</span><button class="ghost small" data-del-s="'+esc(s._id)+'">حذف</button></div>').join(''):'<div class="empty">هنوز جلسه‌ای ثبت نشده. اولین تایمر را بزن.</div>';
+  
   const bd=byDate();let bars='';const mx=Math.max(45,...Array.from({length:7},(_,i)=>bd[iso(addDays(w.ws,i))]||0));
   for(let i=0;i<7;i++){const d=addDays(w.ws,i),k=iso(d),m=bd[k]||0;const h=Math.round(m/mx*88);
     bars+='<div class="bar'+(k===iso(today())?' is-today':'')+'"><small>'+(m?fa(m):'')+'</small><i class="'+(m===0?'zero':m<20?'floor':'')+'" style="height:'+Math.max(h,3)+'px"></i><small>'+weekdayFa(d)+'</small></div>';}
@@ -508,17 +704,20 @@ function render(){
   const days=new Set(S.sessions.map(s=>s.date)).size;$('sDays').textContent=fa(days);
   $('sInc').textContent=fa(S.incs.length);
   const totMin=S.sessions.reduce((a,s)=>a+(Number(s.minutes)||0),0);const wk=Math.max(1,(Math.max(n,1))/7);
-  $('avgLine').textContent='میانگین واقعی: '+fa(Math.round(totMin/wk/6)/10)+' ساعت در هفته (این عدد ورودی تصمیم ماه ۶ است: مهاجرت فقط با ≥۶ ساعت).';
+  $('avgLine').textContent='میانگین واقعی: '+fa(Math.round(totMin/wk/6)/10)+' ساعت در هفته (ورودی تصمیم ماه ۶: شرط مهاجرت ≥۶ ساعت).';
+  
   $('gates').innerHTML=gateInfo().map(g=>{const st=n<g.d?(g.pass?'good':'info'):(g.pass?'good':'bad');const lbl=g.pass?'رسیدی':(n<g.d?'در راه':'رد شد');
     return '<div class="gate"><span class="d">روز '+fa(g.d)+'</span><span>'+g.crit+' <span class="muted">'+g.partial+'</span></span><span class="pill '+st+'">'+lbl+'</span></div>';}).join('');
+  
   const wInc=S.incs.filter(i=>i.date>=iso(w.ws)&&i.date<=iso(w.we));
   const repo=c.repo||'';
   $('summary').textContent='خلاصهٔ هفته (روز '+fa(n)+' از ۹۰)\n'+
     '• جلسه‌ها: '+fa(w.count)+' (حداقل ۳) — '+fa(w.mins)+' دقیقه\n'+
     '• INCهای این هفته: '+(wInc.length?wInc.map(i=>'INC-'+pad3(i.num)+' '+i.title+(i.status==='blocked'?' [BLOCKED]':'')).join('، '):'هیچ')+'\n'+
     '• کل INCها: '+fa(S.incs.length)+'\n'+
-    (lab?'• هفتهٔ بعد: '+lab.title+'\n':'')+(repo?'• ریپو: '+repo:'');
+    (lab?'• تمرین بعدی: '+lab.title+'\n':'')+(repo?'• ریپو: '+repo:'');
   $('buddyLine').textContent=c.buddy?('برای '+c.buddy+' بفرست'):'در «قوانین › تنظیمات» آدم خلاصه را بنویس.';
+  
   const incs=S.incs.slice().sort((a,b)=>a.num-b.num);
   $('incCount').textContent=fa(incs.length);
   const nextNum=incs.length?Math.max(...incs.map(i=>i.num))+1:0;if(document.activeElement!==$('iNum')&&!$('iTitle').value)$('iNum').value=nextNum;
@@ -527,14 +726,19 @@ function render(){
     '<button class="small '+(i.verified?'':'ghost')+'" data-inc="'+esc(i._id)+'" data-f="verified">'+(i.verified?'✓ verified':'verified؟')+'</button>'+
     '<button class="small '+(i.rebroken?'':'ghost')+'" data-inc="'+esc(i._id)+'" data-f="rebroken">'+(i.rebroken?'✓ بازسازی شد':'بازسازی؟')+'</button>'+
     '<span class="muted">'+esc(faDate(i.date))+'</span><button class="ghost small" data-del-i="'+esc(i._id)+'">حذف</button></span></span></div>').join(''):'<div class="empty">INCها اینجا می‌آیند.</div>';
-  $('planList').innerHTML=S.plan.length?S.plan.map((p,ix)=>'<label class="item row'+(p.done?' done':'')+(p.day===n?' today':'')+'" style="flex-wrap:nowrap"><input type="checkbox" class="chk" data-plan="'+ix+'"'+(p.done?' checked':'')+'><span class="num">روز '+fa(p.day)+'</span><span class="t">'+esc(p.title)+'</span></label>').join(''):'<div class="empty">برنامه خالی است.</div>';
+  
   const gateDay=[14,45,90].includes(n);const pp=$('parkPill');pp.textContent=gateDay?'باز (روز دروازه)':'قفل · '+fa(S.parking.length)+' ایده';pp.className='pill '+(gateDay?'good':'warn');
   $('parkList').innerHTML=gateDay?S.parking.map(p=>'<div class="item"><span class="num">روز '+fa(p.day||0)+'</span><span class="t">'+esc(p.text)+'</span><button class="ghost small" data-del-p="'+esc(p._id)+'">حذف</button></div>').join('')||'<div class="empty">پارکینگ خالی است.</div>'
     :'<div class="empty">ایده‌ها تا روز دروازهٔ بعدی ('+fa(n<14?14:n<45?45:90)+') بسته می‌مانند.</div>';
+  
   [['cStart',c.startDate],['cBuddy',c.buddy],['cSlot',c.slot]].forEach(([id,v])=>{if(document.activeElement!==$(id))$(id).value=v||'';});
   if(document.activeElement!==$('cRepo')&&!$('cRepo').dataset.touched)$('cRepo').value=c.repo||'';
+  
+  renderCalendar();
+  renderGuidesTab();
   renderSync();
 }
+
 function renderSync(){
   const p=S.pending||0, b=$('syncTop');
   b.className='syncbtn '+(p?'dirty':'clean');
@@ -545,24 +749,22 @@ function renderSync(){
   else {sp.textContent='همگام';sp.className='pill good';}
 }
 
-/* ---------- GitHub sync ---------- */
+/* GitHub Sync */
 function parseRepo(s){s=String(s||'').trim().replace(/\.git$/,'').replace(/\/+$/,'');
   const m=s.match(/github\.com[/:]([^/\s]+)\/([^/\s#?]+)/i)||s.match(/^([A-Za-z0-9_.-]+)\/([A-Za-z0-9_.-]+)$/);
   return m?{owner:m[1],repo:m[2]}:null;}
 function setLog(msg,kind){const el=$('syncLog');el.textContent=msg;el.className='synclog'+(kind?' '+kind:'');}
 class GhError extends Error{constructor(status,msg){super(msg);this.status=status;}}
 async function gh(path,opts){
-  const r=parseRepo($('cRepo').value||cfg().repo);if(!r)throw new GhError(0,'آدرس ریپو درست نیست. مثال: https://github.com/owner/repo');
+  const r=parseRepo($('cRepo').value||cfg().repo);if(!r)throw new GhError(0,'آدرس ریپو درست نیست.');
   if(!GH.token)throw new GhError(0,'اول توکن را وارد و ذخیره کن.');
   const o=opts||{};const headers={'Accept':o.raw?'application/vnd.github.raw+json':'application/vnd.github+json','Authorization':'Bearer '+GH.token,'X-GitHub-Api-Version':'2022-11-28'};
   if(o.body)headers['Content-Type']='application/json';
   let res;
   try{res=await fetch('https://api.github.com/repos/'+r.owner+'/'+r.repo+path,{method:o.method||'GET',headers,body:o.body?JSON.stringify(o.body):undefined,cache:'no-store'});}
-  catch(e){throw new GhError(-1,'به api.github.com وصل نشد. اینترنت/فیلترشکن را چک کن.');}
+  catch(e){throw new GhError(-1,'خطای شبکه به api.github.com.');}
   if(res.status===404&&o.allow404)return null;
-  if(!res.ok){let m='';try{m=(await res.json()).message||'';}catch(e){}
-    const map={401:'توکن نامعتبر یا منقضی است. یک توکن تازه بساز.',403:'توکن اجازه ندارد. در تنظیمات توکن، Contents را روی «Read and write» بگذار و همین ریپو را انتخاب کن.',404:'ریپو یا شاخه پیدا نشد (یا توکن به این ریپو دسترسی ندارد).',409:'ریپو خالی است یا تداخل دارد.',422:'GitHub درخواست را نپذیرفت.'};
-    throw new GhError(res.status,(map[res.status]||('خطای GitHub '+res.status))+(m?' ['+m+']':''));}
+  if(!res.ok){throw new GhError(res.status,'خطای GitHub: '+res.status);}
   if(o.raw)return res.text();
   return res.status===204?null:res.json();
 }
@@ -575,30 +777,23 @@ function exportJson(){return JSON.stringify({app:'lab-notebook',schema:1,appVers
 function sessionsMd(){
   const c=cfg(),n=dayN();const ss=S.sessions.slice().sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:(a.ts||0)-(b.ts||0));
   const tot=ss.reduce((a,s)=>a+(Number(s.minutes)||0),0);const days=new Set(ss.map(s=>s.date)).size;
-  let o='# Lab sessions\n\n> Auto-generated by the Lab Notebook app on each commit. Edits to this file will be overwritten.\n\n';
+  let o='# Lab sessions (v1.1)\n\n> Auto-generated by Lab Notebook. Edits to this file will be overwritten.\n\n';
   o+='- Day 1: '+c.startDate+' · today is day **'+Math.max(n,0)+'** of 90\n';
-  o+='- Total: **'+ss.length+'** sessions · **'+tot+'** min ('+(Math.round(tot/6)/10)+' h) · '+days+' days with a session\n';
-  o+='- Rule: at least 3 sessions per week (Sat–Fri)\n\n';
-  o+='## Gates\n\n| Day | Criterion | Status |\n|---|---|---|\n';
-  gateInfo().forEach(g=>{o+='| '+g.d+' | '+mdEsc(g.en)+' | '+(g.pass?'passed':(n<g.d?'in progress':'missed'))+' |\n';});
+  o+='- Total: **'+ss.length+'** sessions · **'+tot+'** min ('+(Math.round(tot/6)/10)+' h) · '+days+' days with a session\n\n';
   const weeks={};ss.forEach(s=>{const k=iso(weekStart(parse(s.date)));(weeks[k]=weeks[k]||[]).push(s);});
   Object.keys(weeks).sort().reverse().forEach(k=>{const list=weeks[k];const m=list.reduce((a,s)=>a+(Number(s.minutes)||0),0);
-    o+='\n## Week of '+k+' — '+list.length+' session'+(list.length===1?'':'s')+' · '+m+' min'+(list.length>=3?' ✅':'')+'\n\n';
-    o+='| Date | تاریخ | Day | Minutes | Note |\n|---|---|---|---|---|\n';
-    list.forEach(s=>{o+='| '+s.date+' | '+faDateFull(s.date)+' | '+(diffDays(parse(s.date),parse(c.startDate))+1)+' | '+s.minutes+' | '+mdEsc(s.note)+' |\n';});});
-  if(!ss.length)o+='\n_No sessions yet._\n';
+    o+='\n## Week of '+k+' — '+list.length+' sessions · '+m+' min\n\n| Date | Minutes | Note |\n|---|---|---|\n';
+    list.forEach(s=>{o+='| '+s.date+' | '+s.minutes+' | '+mdEsc(s.note)+' |\n';});});
   return o;
 }
 function incsMd(paths){
   const incs=S.incs.slice().sort((a,b)=>a.num-b.num);
-  let o='# INC index\n\n> Auto-generated by the Lab Notebook app. The reports themselves are the INC-xxx.md files; this is only the index.\n\n';
-  o+='- Total: **'+incs.length+'** · solved: '+incs.filter(i=>i.status==='done').length+' · blocked: '+incs.filter(i=>i.status==='blocked').length+' · with verification: '+incs.filter(i=>i.verified).length+' · rebuilt from scratch: '+incs.filter(i=>i.rebroken).length+'\n\n';
-  o+='| INC | Title | Date | Status | Verified | Rebuilt |\n|---|---|---|---|---|---|\n';
-  incs.forEach(i=>{const id='INC-'+pad3(i.num);const file=(paths||[]).find(p=>/\.md$/i.test(p)&&p.split('/').pop().toUpperCase().startsWith(id));
-    o+='| '+(file?'['+id+'](../'+file.split('/').map(encodeURIComponent).join('/')+')':id)+' | '+mdEsc(i.title)+' | '+i.date+' | '+(i.status==='blocked'?'BLOCKED':'solved')+' | '+(i.verified?'yes':'—')+' | '+(i.rebroken?'yes':'—')+' |\n';});
-  if(!incs.length)o+='| — | — | — | — | — | — |\n';
+  let o='# INC index (v1.1)\n\n| INC | Title | Date | Status | Verified | Rebuilt |\n|---|---|---|---|---|---|\n';
+  incs.forEach(i=>{const id='INC-'+pad3(i.num);
+    o+='| '+id+' | '+mdEsc(i.title)+' | '+i.date+' | '+(i.status==='blocked'?'BLOCKED':'solved')+' | '+(i.verified?'yes':'—')+' | '+(i.rebroken?'yes':'—')+' |\n';});
   return o;
 }
+
 let busy=false;
 function setBusy(b){busy=b;['gCommit','gRestore','gTest','syncTop'].forEach(id=>$(id).disabled=b);}
 async function doCommit(){
@@ -606,71 +801,58 @@ async function doCommit(){
   setBusy(true);setLog('در حال commit…');
   try{
     const br=await branchName();
-    for(let attempt=0;attempt<2;attempt++){
-      const ref=await gh('/git/ref/heads/'+encodeURIComponent(br));
-      const head=ref.object.sha;const commit=await gh('/git/commits/'+head);
-      let paths=[];try{const tr=await gh('/git/trees/'+commit.tree.sha+'?recursive=1');paths=(tr.tree||[]).filter(x=>x.type==='blob').map(x=>x.path);}catch(e){}
-      const tree=await gh('/git/trees',{method:'POST',body:{base_tree:commit.tree.sha,tree:[
-        {path:'logs/sessions.md',mode:'100644',type:'blob',content:sessionsMd()},
-        {path:'logs/incs.md',mode:'100644',type:'blob',content:incsMd(paths)},
-        {path:'logs/lab-data.json',mode:'100644',type:'blob',content:exportJson()}]}});
-      if(tree.sha===commit.tree.sha){S.pending=0;S.lastSync={at:Date.now(),sha:head,nochange:true};await persist();render();setLog('چیزی برای commit نبود؛ ریپو از قبل به‌روز است.','ok');return;}
-      const n=dayN(),w=weekStats();
-      const msg='lab log: day '+Math.max(n,0)+' · '+S.sessions.length+' sessions · '+S.incs.length+' INCs\n\nThis week: '+w.count+' sessions, '+w.mins+' min.\nCommitted from the Lab Notebook Android app.';
-      const nc=await gh('/git/commits',{method:'POST',body:{message:msg,tree:tree.sha,parents:[head]}});
-      try{await gh('/git/refs/heads/'+encodeURIComponent(br),{method:'PATCH',body:{sha:nc.sha,force:false}});}
-      catch(e){if(attempt===0&&(e.status===422||e.status===409))continue;throw e;}
-      S.pending=0;S.lastSync={at:Date.now(),sha:nc.sha};await persist();render();
-      setLog('Commit شد ✓ '+nc.sha.slice(0,7)+' روی '+br+' — '+new Date().toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'}),'ok');toast('Commit شد');return;
-    }
+    const ref=await gh('/git/ref/heads/'+encodeURIComponent(br));
+    const head=ref.object.sha;const commit=await gh('/git/commits/'+head);
+    let paths=[];try{const tr=await gh('/git/trees/'+commit.tree.sha+'?recursive=1');paths=(tr.tree||[]).filter(x=>x.type==='blob').map(x=>x.path);}catch(e){}
+    const tree=await gh('/git/trees',{method:'POST',body:{base_tree:commit.tree.sha,tree:[
+      {path:'logs/sessions.md',mode:'100644',type:'blob',content:sessionsMd()},
+      {path:'logs/incs.md',mode:'100644',type:'blob',content:incsMd(paths)},
+      {path:'logs/lab-data.json',mode:'100644',type:'blob',content:exportJson()}]}});
+    if(tree.sha===commit.tree.sha){S.pending=0;S.lastSync={at:Date.now(),sha:head,nochange:true};await persist();render();setLog('ریپو از قبل به‌روز است.','ok');return;}
+    const msg='lab log v1.1: day '+Math.max(dayN(),0)+' · '+S.sessions.length+' sessions · '+S.incs.length+' INCs';
+    const nc=await gh('/git/commits',{method:'POST',body:{message:msg,tree:tree.sha,parents:[head]}});
+    await gh('/git/refs/heads/'+encodeURIComponent(br),{method:'PATCH',body:{sha:nc.sha,force:false}});
+    S.pending=0;S.lastSync={at:Date.now(),sha:nc.sha};await persist();render();
+    setLog('Commit شد ✓ '+nc.sha.slice(0,7),'ok');toast('Commit شد');
   }catch(e){setLog(e.message||String(e),'err');toast('Commit نشد');}
   finally{setBusy(false);}
 }
-function mergeById(local,remote){const m=new Map();(remote||[]).forEach(x=>{if(x&&x._id)m.set(x._id,x);});(local||[]).forEach(x=>{if(x&&x._id)m.set(x._id,x);});return Array.from(m.values());}
 async function doRestore(btn){
   if(busy)return;if(!GH.token){setLog('اول توکن را وارد کن.','err');return;}
-  if(!confirmTap(btn,'دوباره بزن: ادغام از GitHub'))return;
-  setBusy(true);setLog('در حال خواندن logs/lab-data.json…');
+  if(!confirmTap(btn,'دوباره بزن: بازیابی'))return;
+  setBusy(true);setLog('در حال بازیابی…');
   try{
     const br=await branchName();
     const txt=await gh('/contents/logs/lab-data.json?ref='+encodeURIComponent(br),{raw:true,allow404:true});
-    if(txt==null){setLog('در ریپو هنوز logs/lab-data.json نیست؛ اول یک بار Commit کن.','err');return;}
-    let d;try{d=JSON.parse(txt);}catch(e){throw new Error('فایل lab-data.json خراب است.');}
-    const before={s:S.sessions.length,i:S.incs.length};
-    S.sessions=mergeById(S.sessions,d.sessions);S.incs=mergeById(S.incs,d.incs);S.parking=mergeById(S.parking,d.parking);
-    const byDay=new Map();(d.plan||[]).forEach(p=>byDay.set(p.day+'|'+p.title,Object.assign({},p)));
-    S.plan.forEach(p=>{const k=p.day+'|'+p.title;const r=byDay.get(k);byDay.set(k,Object.assign({},p,{done:!!(p.done||(r&&r.done))}));});
-    S.plan=Array.from(byDay.values()).sort((a,b)=>a.day-b.day);
-    const rc=d.config||{};const lc=cfg();S.config=Object.assign({},rc,lc,{buddy:lc.buddy||rc.buddy||'',slot:lc.slot||rc.slot||'',repo:lc.repo||rc.repo||'',startDate:lc.startDate||rc.startDate});
-    S.pending=(S.pending||0)+1;await persist();render();
-    setLog('ادغام شد ✓ جلسه‌ها '+fa(before.s)+' → '+fa(S.sessions.length)+'، INCها '+fa(before.i)+' → '+fa(S.incs.length)+'.','ok');
+    if(!txt){setLog('فایل در ریپو نیست.','err');return;}
+    const d=JSON.parse(txt);
+    S.sessions=d.sessions||[];S.incs=d.incs||[];S.parking=d.parking||[];
+    S.pending=0;await persist();render();
+    setLog('داده‌ها بازیابی شدند ✓','ok');
   }catch(e){setLog(e.message||String(e),'err');}
   finally{setBusy(false);}
 }
 async function doTest(){
   if(busy)return;setBusy(true);setLog('در حال تست…');
-  try{const info=await gh('');const br=GH.branch||info.default_branch;await gh('/git/ref/heads/'+encodeURIComponent(br));
-    const canPush=info.permissions?info.permissions.push:null;
-    setLog('اتصال برقرار است ✓ '+info.full_name+' · شاخه '+br+(canPush===false?' — اما توکن اجازهٔ نوشتن ندارد!':''),canPush===false?'err':'ok');}
+  try{const info=await gh('');setLog('اتصال برقرار است ✓ '+info.full_name,'ok');}
   catch(e){setLog(e.message||String(e),'err');}
   finally{setBusy(false);}
 }
+
 async function saveGh(){await store.set(GH_KEY,JSON.stringify({token:GH.token,branch:GH.branch}));}
 $('gSave').addEventListener('click',async()=>{const t=$('gToken').value.trim();if(!t){toast('توکن خالی است');return;}
-  if(!/^(github_pat_|ghp_)[A-Za-z0-9_]+$/.test(t)){toast('شکل توکن عجیب است؛ با github_pat_ شروع می‌شود');}
   GH.token=t;GH.branch=$('gBranch').value.trim();await saveGh();$('gToken').value='';$('gToken').placeholder='توکن ذخیره شده (…'+t.slice(-4)+')';renderSync();toast('توکن ذخیره شد');});
 $('gBranch').addEventListener('change',async()=>{GH.branch=$('gBranch').value.trim();await saveGh();});
-$('cRepo').addEventListener('input',()=>{$('cRepo').dataset.touched='1';});
-$('cRepo').addEventListener('change',()=>{const v=$('cRepo').value.trim();if(!parseRepo(v)){toast('آدرس ریپو درست نیست');return;}
-  delete $('cRepo').dataset.touched;commitLocal(()=>{S.config=Object.assign({},cfg(),{repo:v});},'ریپو ذخیره شد');});
+$('cRepo').addEventListener('change',()=>{const v=$('cRepo').value.trim();if(!parseRepo(v)){toast('آدرس ریپو نامعتبر است');return;}
+  commitLocal(()=>{S.config=Object.assign({},cfg(),{repo:v});},'ریپو ذخیره شد');});
 $('gShow').addEventListener('click',()=>{const i=$('gToken');i.type=i.type==='password'?'text':'password';$('gShow').textContent=i.type==='password'?'نمایش':'پنهان';});
-$('gForget').addEventListener('click',async e=>{if(!confirmTap(e.target,'حذف توکن؟'))return;GH.token='';await saveGh();$('gToken').placeholder='github_pat_…';renderSync();setLog('توکن از این گوشی پاک شد.');});
+$('gForget').addEventListener('click',async e=>{if(!confirmTap(e.target,'حذف توکن؟'))return;GH.token='';await saveGh();$('gToken').placeholder='github_pat_…';renderSync();setLog('توکن حذف شد.');});
 $('gTest').addEventListener('click',doTest);
 $('gCommit').addEventListener('click',doCommit);
 $('gRestore').addEventListener('click',e=>doRestore(e.currentTarget));
 $('syncTop').addEventListener('click',()=>{if(!S.pending&&GH.token){show('rules');return;}doCommit();});
 
-/* ---------- boot ---------- */
+/* Boot */
 (async()=>{
   let raw=await store.get(DATA_KEY);let d=null;try{d=raw?JSON.parse(raw):null;}catch(e){d=null;}
   if(!d){d=JSON.parse(JSON.stringify(SEED));d.pending=1;d.lastSync=null;}
@@ -678,8 +860,7 @@ $('syncTop').addEventListener('click',()=>{if(!S.pending&&GH.token){show('rules'
   if(!raw)await persist();
   try{const g=JSON.parse(await store.get(GH_KEY)||'{}');GH.token=g.token||'';GH.branch=g.branch||'';}catch(e){}
   $('gBranch').value=GH.branch;if(GH.token)$('gToken').placeholder='توکن ذخیره شده (…'+GH.token.slice(-4)+')';
-  if(S.lastSync&&S.lastSync.at)setLog('آخرین commit: '+new Date(S.lastSync.at).toLocaleString('fa-IR-u-ca-persian',{month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'})+(S.lastSync.sha?' · '+S.lastSync.sha.slice(0,7):''),'ok');
-  $('verLine').textContent='نسخهٔ اپ '+APP_VERSION+(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform()?' · اندروید':' · مرورگر')+(Pref?' · ذخیرهٔ بومی فعال':'');
+  $('verLine').textContent='دفتر آزمایشگاه نسخهٔ '+APP_VERSION+' · طراحی شده با UI/UX Pro Max & Ponytail';
   S.ready=true;render();
 })();
 setInterval(()=>{if(S.ready)render();},60000);
