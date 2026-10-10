@@ -112,7 +112,11 @@ summary{cursor:pointer;font-weight:800}
 /* Runbook guide boxes */
 .guide-card{background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:12px;margin-top:6px;font-size:13.5px}
 .guide-card h3{margin:0 0 6px 0;font-size:14px;color:var(--accent);display:flex;align-items:center;gap:6px}
-.code-block{background:var(--sheet);border:1px solid var(--rule);border-radius:8px;padding:8px 10px;font-family:var(--f-mono);font-size:12.5px;direction:ltr;text-align:left;overflow-x:auto;margin-block:6px}
+.code-wrap{position:relative;margin-block:6px;direction:ltr}
+.code-wrap .copy-btn{position:absolute;top:6px;right:6px;font-size:11px;font-weight:700;min-height:26px;padding:2px 8px;border-radius:6px;background:var(--sheet);border:1px solid var(--rule);color:var(--ink-2);cursor:pointer;opacity:0.9;transition:all 0.15s ease;z-index:2}
+.code-wrap .copy-btn:hover{opacity:1;color:var(--ink);border-color:var(--accent)}
+.code-block{background:var(--sheet);border:1px solid var(--rule);border-radius:8px;padding:10px 12px;padding-top:28px;font-family:var(--f-mono);font-size:12.5px;direction:ltr;text-align:left;overflow-x:auto;margin:0;white-space:pre-wrap;word-break:break-all}
+.danger-badge{background:var(--bad-soft);color:var(--bad);border:1px solid var(--bad);border-radius:6px;padding:3px 8px;font-size:11.5px;font-weight:800;display:inline-flex;align-items:center;gap:4px;margin-bottom:6px}
 
 /* Calendar widget */
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;margin-top:8px}
@@ -193,7 +197,10 @@ summary{cursor:pointer;font-weight:800}
     <div class="card">
       <h2>راهنمای سناریوهای روزانه (Runbook)</h2>
       <div class="muted">دستورات سناریوی شبیه‌سازی خرابی، عیب‌یابی، رفع و سوالات کلیدی برای هر روز:</div>
-      <div id="guidesAccordion" class="list"></div>
+      <div class="row" style="margin-top:6px">
+        <input id="guidesSearch" placeholder="🔍 جستجو در سناریوها، دستورات، کلیدواژه‌ها (مثلاً nginx، lsof، sudo)..." autocomplete="off">
+      </div>
+      <div id="guidesAccordion" class="list" style="margin-top:10px"></div>
     </div>
   </section>
 
@@ -338,56 +345,247 @@ const weekdayFa=d=>{try{return d.toLocaleDateString('fa-IR',{weekday:'narrow'});
 const ls={get(k){try{return localStorage.getItem(k);}catch(e){return null;}},set(k,v){try{localStorage.setItem(k,v);}catch(e){}},del(k){try{localStorage.removeItem(k);}catch(e){}}};
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
 
-/* Built-in Runbooks for lab days (detailed break/diagnose/fix guidance) */
+/* Built-in Runbooks for lab days (detailed break/diagnose/fix guidance for all 30 days) */
 const RUNBOOKS = {
   1: {
     title: "INC-000: خروجی پایه سیستم",
     scenario: "در اولین مواجهه با هر سرور لینوکس جدید، باید مشخصات سخت‌افزاری، پارتیشن‌ها و شبکه ثبت شود.",
     cmd: "uname -a\ndf -h\nip a\nlsblk",
     fix: "خروجی‌ها را مستقیماً در گزارش INC کپی کن. خطاهای تایپی مثل de -h را به عنوان تجربه لاگ کن.",
-    question: "آیا در خروجی ip a وضعیت اینترفیس UP است یا DOWN؟ MTU آن چقدر است؟"
+    question: "آیا در خروجی ip a وضعیت اینترفیس UP است یا DOWN؟ MTU آن چقدر است؟",
+    destructive: false
   },
   2: {
     title: "INC-001: فایل با مجوز 000 (Permission Denied)",
     scenario: "فایلی وجود دارد که هیچ مجوزی حتی برای خواندن ندارد. کاربر عادی و روت چطور با آن برخورد می‌کنند؟",
-    cmd: "mkdir ~/lab && echo 'hello' > ~/lab/report.txt\nchmod 000 ~/lab/report.txt\ncat ~/lab/report.txt",
+    cmd: "mkdir -p ~/lab && echo 'hello' > ~/lab/report.txt\nchmod 000 ~/lab/report.txt\ncat ~/lab/report.txt",
     fix: "ls -l ~/lab/report.txt; stat ~/lab/report.txt\nchmod 644 ~/lab/report.txt\ncat ~/lab/report.txt # verified",
-    question: "چرا دستور sudo cat حتی با دسترسی 000 می‌تواند فایل را بخواند؟ (مفهوم روت در DAC لینوکس)"
+    question: "چرا دستور sudo cat حتی با دسترسی 000 می‌تواند فایل را بخواند؟ (مفهوم روت در DAC لینوکس)",
+    destructive: false
   },
   3: {
     title: "نصب اوبونتو سرور روی VMware و ارتباط SSH",
     scenario: "راه‌اندازی ماشین مجازی استاندارد برای سناریوهایی که روی Killercoda اجرا نمی‌شوند (مثل GRUB و fstab).",
     cmd: "ip a # پیدا کردن IP ماشین\nsudo systemctl status ssh",
     fix: "از PowerShell ویندوز متصل شو:\nssh user@<VM-IP>\nسپس در VMware یک Snapshot به نام 'clean' بگیر.",
-    question: "تفاوت کارت شبکه در حالت NAT و Bridged در ارتباط SSH از ویندوز چیست؟"
+    question: "تفاوت کارت شبکه در حالت NAT و Bridged در ارتباط SSH از ویندوز چیست؟",
+    destructive: false
   },
   4: {
     title: "سرویس متوقف‌شده: systemctl و journalctl",
     scenario: "سرویسی Fail یا Stop شده و سرویس وابسته کار نمی‌کند.",
     cmd: "sudo systemctl stop ssh\nsudo systemctl status ssh",
     fix: "sudo systemctl start ssh\njournalctl -u ssh -n 20 --no-pager",
-    question: "تفاوت وضعیت inactive (dead) با failed در خروجی systemctl چیست؟"
+    question: "تفاوت وضعیت inactive (dead) با failed در خروجی systemctl چیست؟",
+    destructive: false
+  },
+  5: {
+    title: "کاربر و گروه: useradd، groups و دسترسی sudo",
+    scenario: "کاربر جدید ایجاد شده اما عضو گروه sudo نیست یا دایرکتوری خانگی ساخته نشده است.",
+    cmd: "sudo useradd -m -s /bin/bash devops\nsu - devops -c 'sudo whoami' # خطا: devops is not in the sudoers file",
+    fix: "sudo usermod -aG sudo devops\nsu - devops -c 'sudo whoami' # خروجی: root\nid devops",
+    question: "تفاوت فلگ -G و -aG در دستور usermod چیست؟ (چرا فراموشی -a خطرناک است؟)",
+    destructive: false
+  },
+  6: {
+    title: "لاگ‌خوانی عمیق: journalctl، /var/log و grep",
+    scenario: "بررسی پیام‌های سیستمی و خطاهای کرنل و سرویس‌ها در یک بازه زمانی مشخص.",
+    cmd: "journalctl -p err..emerg -n 25 --no-pager\nsudo grep -i 'fail\\|error' /var/log/auth.log | tail -n 15",
+    fix: "journalctl -u sshd --since '1 hour ago' --no-pager\njournalctl -k -p err # فقط خطاهای لایه کرنل",
+    question: "تفاوت لاگ‌های فرار (Volatile /run/log) و لاگ‌های پایدار (Persistent /var/log/journal) در journald چیست؟",
+    destructive: false
+  },
+  7: {
+    title: "استراحت و ممیزی هفته اول: بازبینی لاگ‌ها و خلاصه جمعه",
+    scenario: "بررسی تمام INCهای هفته اول، اطمینان از پاکسازی فایل‌های تمرینی و جمع‌بندی گزارش هفتگی.",
+    cmd: "python tools/lab_cli.py list\npython tools/lab_cli.py validate",
+    fix: "بررسی فایل README.md ریپو، به‌روزرسانی اهداف هفته بعد و تهیه خروجی خلاصه در تب قوانین.",
+    question: "قانون طلایی هفته: آیا سناریوهای هفته اول را بدون نگاه کردن به یادداشت‌ها می‌توانی ظرف ۵ دقیقه بازسازی کنی؟",
+    destructive: false
   },
   8: {
     title: "فایل حذف‌شده ولی باز (Open Deleted File)",
     scenario: "دیسک پر است اما با du فایلی پیدا نمی‌شود؛ چون پروسسی فایل حذف‌شده را باز نگه داشته است.",
     cmd: "truncate -s 1G /tmp/disk.img && mkfs.ext4 -q /tmp/disk.img\nsudo mkdir -p /mnt/lab && sudo mount -o loop /tmp/disk.img /mnt/lab\nsudo dd if=/dev/zero of=/mnt/lab/app.log bs=1M count=900\nsudo sh -c 'nohup sleep infinity < /mnt/lab/app.log >/dev/null 2>&1 &'\nsudo rm /mnt/lab/app.log",
     fix: "df -h /mnt/lab # پر است\nsudo du -sh /mnt/lab # خالی است!\nsudo lsof +L1\n# حل: کشتن پروسس با kill یا خالی کردن: sudo truncate -s 0 /proc/<PID>/fd/<FD>",
-    question: "تفاوت df (که inode/blocks دیسک را می‌شمارد) با du (که جدول فایل‌ها را پیمایش می‌کند) چیست؟"
+    question: "تفاوت df (که inode/blocks دیسک را می‌شمارد) با du (که جدول فایل‌ها را پیمایش می‌کند) چیست؟",
+    destructive: true
   },
   9: {
     title: "خرابی fstab و ورود به Emergency Mode",
     scenario: "یک UUID اشتباه در fstab باعث می‌شود ماشین در زمان بوت متوقف شود.",
     cmd: "sudo cp /etc/fstab /root/fstab.bak\necho 'UUID=deadbeef-0000-0000-0000-000000000000 /data ext4 defaults 0 2' | sudo tee -a /etc/fstab\nsudo reboot",
     fix: "در Emergency Mode روت شوید:\nmount -o remount,rw /\nnano /etc/fstab # حذف خط اشتباه\nfindmnt --verify\nmount -a && reboot",
-    question: "چرا پارامتر nofail در fstab مانع از توقف بوت سیستم در درایوهای غیراصلی می‌شود؟"
+    question: "چرا پارامتر nofail در fstab مانع از توقف بوت سیستم در درایوهای غیراصلی می‌شود؟",
+    destructive: true
   },
   10: {
     title: "ریکاوری پسورد/فایل از GRUB با init=/bin/bash",
     scenario: "وقتی پسورد روت فراموش شده یا سیستم بالا نمی‌آید، تزریق مستقیم شل بش در کرنل.",
     cmd: "در منوی GRUB دکمه e را بزن. خط linux را پیدا کن. انتهای آن بنویس: rw init=/bin/bash سپس Ctrl+X",
     fix: "mount -o remount,rw /\npasswd root # یا تعمیر فایل‌ها\nsync\nreboot -f",
-    question: "چرا وقتی با init=/bin/bash وارد سیستم می‌شویم دستورات systemctl و journalctl کار نمی‌کنند؟"
+    question: "چرا وقتی با init=/bin/bash وارد سیستم می‌شویم دستورات systemctl و journalctl کار نمی‌کنند؟",
+    destructive: true
+  },
+  11: {
+    title: "Nginx بالا نمی‌آید: تداخل پورت و خطای سینتکس",
+    scenario: "سرویس Nginx اجرا نمی‌شود. معمولاً دلیل آن اشتباه تایپی در پیکربندی یا اشغال پورت 80 توسط پروسس دیگر است.",
+    cmd: "sudo sed -i 's/listen 80;/listen 80;\\n\\tbad_directive;/' /etc/nginx/sites-available/default\nsudo systemctl restart nginx # fail",
+    fix: "sudo nginx -t # نمایش خطای سینتکس و شماره خط\nsudo ss -tulpn | grep :80 # بررسی اشغال پورت\nsudo nano /etc/nginx/sites-available/default # رفع خطا\nsudo systemctl start nginx",
+    question: "چرا قبل از هر restart یا reload باید دستور nginx -t اجرا شود؟ تفاوت reload و restart چیست؟",
+    destructive: false
+  },
+  12: {
+    title: "خطای 403 Forbidden در Nginx: مجوزها و مالکیت وب",
+    scenario: "کاربر با ورود به وب‌سایت با خطای 403 مواجه می‌شود در حالی که فایل index.html در دایرکتوری وب وجود دارد.",
+    cmd: "sudo chmod 000 /var/www/html/index.html\ncurl -I http://localhost # خروجی: HTTP/1.1 403 Forbidden",
+    fix: "sudo chown -R www-data:www-data /var/www/html\nsudo find /var/www/html -type d -exec chmod 755 {} \\;\nsudo find /var/www/html -type f -exec chmod 644 {} \\;\ncurl -I http://localhost # خروجی 200 OK",
+    question: "چرا دسترسی Execute (+x) روی دایرکتوری‌ها برای خوانده شدن فایل‌های درون آن توسط وب‌سرور ضروری است؟",
+    destructive: false
+  },
+  13: {
+    title: "دیسک پر: df -h، du و پیدا کردن فایل‌های حجیم",
+    scenario: "فضای دیسک 100% پر شده و سرویس‌ها خطای 'No space left on device' می‌دهند.",
+    cmd: "sudo fallocate -l 500M /var/log/dummy_flood.log\ndf -h /var",
+    fix: "sudo du -ahx /var | sort -rh | head -n 10\nsudo find /var/log -type f -size +100M\nsudo rm /var/log/dummy_flood.log",
+    question: "چرا فلگ -x در دستور du (یک فایل‌سیستم) مانع از شمارش بیهوده مانت‌های شبکه و داکر می‌شود؟",
+    destructive: false
+  },
+  14: {
+    title: "دروازه روز ۱۴ + باز کردن پارکینگ یادگیری",
+    scenario: "رسیدن به مرز دو هفته تمرین. بازبینی موانع ثبت‌شده در پارکینگ ذهن و بررسی پایداری ریپو.",
+    cmd: "python tools/lab_cli.py list\ngit status",
+    fix: "مرور لیست سوالاتی که در حین کار در گوشه یادداشت‌ها مانده بود (Parking Lot) و پاسخ به آن‌ها در قالب یادداشت.",
+    question: "کدام سناریوی هفته دوم بیشترین چالش را داشت؟ چگونه فرآیند عیب‌یابی آن را سیستماتیک کردی؟",
+    destructive: false
+  },
+  15: {
+    title: "کاربر نمی‌تواند لاگین کند: پوسته /sbin/nologin",
+    scenario: "کاربر احراز هویت می‌شود اما بلافاصله پس از لاگین اتصال SSH قطع می‌شود.",
+    cmd: "sudo usermod -s /sbin/nologin devops\nssh devops@localhost # This account is currently not available.",
+    fix: "sudo grep devops /etc/passwd\nsudo chsh -s /bin/bash devops\n# یا: sudo usermod -s /bin/bash devops\nssh devops@localhost",
+    question: "تفاوت /sbin/nologin و /bin/false چیست؟ کدام یک پیام توضیحی به کاربر نشان می‌دهد؟",
+    destructive: false
+  },
+  16: {
+    title: "فایل sudoers خراب — رفع امن با visudo",
+    scenario: "دستکاری غیراصولی /etc/sudoers و بروز خطای سینتکس که مانع اجرای هر دستور sudo می‌شود.",
+    cmd: "# هشدار: فقط روی ماشین مجازی با اسنپ‌شات!\necho 'syntax error line' | sudo tee -a /etc/sudoers\nsudo ls # >>> /etc/sudoers: syntax error",
+    fix: "# در صورت داشتن ترمینال روت:\nvisudo -c # بررسی سینتکس\nvisudo # باز کردن در محیط امن و رفع خطا\n# در صورت قفل شدن: ریبوت به Single User Mode / Recovery Mode و اصلاح فایل.",
+    question: "چرا هرگز نباید /etc/sudoers را مستقیماً با nano یا vim ویرایش کرد و همیشه باید از visudo استفاده کرد؟",
+    destructive: true
+  },
+  17: {
+    title: "کرون‌جاب (Cron Job) اجرا نمی‌شود: متغیر PATH و دسترسی‌ها",
+    scenario: "دستور در ترمینال دستی بدون مشکل کار می‌کند اما در crontab هیچ خروجی نمی‌دهد یا خطا می‌خورد.",
+    cmd: "(crontab -l 2>/dev/null; echo '* * * * * backup.sh >> /tmp/cron.log 2>&1') | crontab -",
+    fix: "grep CRON /var/log/syslog # یا journalctl -u cron\n# مشکل: اسکریپت فاقد مسیر مطلق (/usr/local/bin/backup.sh) است یا PATH کرون محدود است.\ncrontab -e # اصلاح: PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin و نوشتن مسیر کامل دستورات",
+    question: "محیط متغیرهای Environment در پروسس Cron چه تفاوت اساسی با شل تعاملی کاربر دارد؟",
+    destructive: false
+  },
+  18: {
+    title: "چرا سرویس در بوت قبلی Crash کرد؟ (journalctl -b -1)",
+    scenario: "سیستم پس از یک ریبوت ناگهانی بالا آمده و باید دلیل سقوط سرویس در بوت قبلی ریشه‌یابی شود.",
+    cmd: "journalctl --list-boots",
+    fix: "journalctl -b -1 -u nginx -p err..emerg --no-pager\njournalctl -b -1 -k -g 'oom-killer\\|panic'",
+    question: "شرط ثبت تاریخچه بوت‌های قبلی در systemd چیست؟ (تنظیم Storage=persistent در journald.conf)",
+    destructive: false
+  },
+  19: {
+    title: "دیسک پر از یک لاگ بزرگ + پیکربندی استاندارد logrotate",
+    scenario: "فایل لاگ یک سرویس به چند گیگابایت رسیده و فضای دیسک را بلعیده است.",
+    cmd: "sudo truncate -s 500M /var/log/custom-app.log\nlogrotate -d /etc/logrotate.conf",
+    fix: "sudo nano /etc/logrotate.d/custom-app\n# محتوا: /var/log/custom-app.log { daily missingok rotate 7 compress delaycompress notifempty create 0640 root adm }\nsudo logrotate -f /etc/logrotate.d/custom-app",
+    question: "آپشن copytruncate در logrotate چه کار می‌کند و چرا برای اپلیکیشن‌هایی که قابلیت reload ندارند حیاتی است؟",
+    destructive: false
+  },
+  20: {
+    title: "اتمام Inode روی Loop Device (df -i)",
+    scenario: "دستور df -h نشان می‌دهد دیسک پر نیست اما ساخت فایل جدید با خطای No space left on device متوقف می‌شود.",
+    cmd: "# هشدار: ایجاد loop device آزمایشی\ntruncate -s 50M /tmp/loop-inode.img && mkfs.ext4 -N 1000 /tmp/loop-inode.img\nsudo mkdir -p /mnt/inode-test && sudo mount /tmp/loop-inode.img /mnt/inode-test\nsudo bash -c 'for i in $(seq 1 1005); do touch /mnt/inode-test/f_$i; done' # No space left",
+    fix: "df -i /mnt/inode-test # درصد استفاده از inode 100% است\nfind /mnt/inode-test -type f | wc -l\nsudo rm -rf /mnt/inode-test/f_*\nsudo umount /mnt/inode-test",
+    question: "تفاوت مفهوم Inode (متادیتا و اشاره‌گرها) با Data Blocks در ساختار فایل‌سیستم چیست؟",
+    destructive: true
+  },
+  21: {
+    title: "استراحت / بازسازی سناریوی INC-001 از ترمینال خالی",
+    scenario: "آزمون تسلط بدون راهنما: ایجاد مجدد خطای Permission Denied روی فایل و عیب‌یابی در کمتر از ۳ دقیقه.",
+    cmd: "mkdir -p ~/drill && echo 'secret' > ~/drill/pass.txt && chmod 000 ~/drill/pass.txt",
+    fix: "ls -la ~/drill/pass.txt\nstat ~/drill/pass.txt\nchmod 600 ~/drill/pass.txt\ncat ~/drill/pass.txt",
+    question: "چرا برای فایل‌های حساس مانند کلید خصوصی SSH یا پسوردها مجوز 600 الزامی است؟",
+    destructive: false
+  },
+  22: {
+    title: "مدیریت حجم‌های منطقی (LVM): افزودن دیسک (pvcreate, vgextend, lvextend)",
+    scenario: "حجم یک پارتیشن LVM پر شده و باید با افزودن یک دیسک مجازی جدید بدون Down-time فضای Volume Group را افزایش داد.",
+    cmd: "# فقط روی VM با یک هارد مجازی اضافه شده (/dev/sdb)\nsudo pvcreate /dev/sdb\nsudo vgs",
+    fix: "sudo vgextend ubuntu-vg /dev/sdb\nsudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv\nsudo lvs",
+    question: "معماری سلسله‌مراتبی LVM: تفاوت Physical Volume (PV)، Volume Group (VG) و Logical Volume (LV) چیست؟",
+    destructive: true
+  },
+  23: {
+    title: "بزرگ کردن فایل‌سیستم در LVM آنلاین (resize2fs / xfs_growfs)",
+    scenario: "پس از افزایش سایز LV با دستور lvextend، هنوز df -h سایز جدید را نشان نمی‌دهد چون فایل‌سیستم گسترش نیافته است.",
+    cmd: "df -h /\nlsblk",
+    fix: "# برای فایل‌سیستم ext4:\nsudo resize2fs /dev/ubuntu-vg/ubuntu-lv\n# برای فایل‌سیستم XFS:\n# sudo xfs_growfs /\ndf -h / # تایید افزایش حجم",
+    question: "تفاوت resize2fs در ext4 و xfs_growfs در XFS چیست؟ (آیا XFS امکان کوچک شدن دارد؟)",
+    destructive: false
+  },
+  24: {
+    title: "پروسس سرکش و اشغال 100% CPU: ابزارهای top، nice و kill",
+    scenario: "یک پروسس تمام ظرفیت پردازنده را مصرف کرده و پاسخ‌دهی سرور به شدت افت کرده است.",
+    cmd: "sha1sum /dev/zero & # اجرای پروسس پرمصرف در پس‌زمینه\nPID=$!\necho \"Stall process PID: $PID\"",
+    fix: "top -b -n 1 | head -n 15 # یا htop\nrenice +10 -p $PID # کاهش اولویت\nkill -15 $PID # ارسال SIGTERM\n# در صورت عدم خروج:\nkill -9 $PID # ارسال SIGKILL\nkillall sha1sum 2>/dev/null || true",
+    question: "تفاوت سیگنال‌های SIGTERM (15)، SIGINT (2) و SIGKILL (9) در مدیریت فرآیندهای لینوکس چیست؟",
+    destructive: false
+  },
+  25: {
+    title: "فشار حافظه و OOM Killer: ابزارهای free، vmstat و dmesg",
+    scenario: "سیستم دچار کمبود رم شده و کرنل پروسس‌های مصرف‌کننده را به صورت خودکار نابود می‌کند.",
+    cmd: "free -m\nvmstat 1 5\nsudo dmesg -T | grep -i -E 'oom[- ]killer|out of memory' | tail -n 10",
+    fix: "cat /proc/sys/vm/swappiness # بررسی نرخ استفاده از Swap\nsudo swapon --show # بررسی وضعیت فایل یا پارتیشن Swap\nps aux --sort=-%mem | head -n 10",
+    question: "کرنل لینوکس چگونه oom_score یک پروسس را محاسبه می‌کند و کدام پروسس را برای kill انتخاب می‌کند؟",
+    destructive: false
+  },
+  26: {
+    title: "فایل‌سیستم Read-Only شد: تشخیص و Remount امن",
+    scenario: "خطای 'Read-only file system' هنگام نوشتن یا ایجاد فایل جدید به دلیل خطای I/O دیسک یا کرنل.",
+    cmd: "touch /root/test.txt # خروجی: touch: cannot touch '/root/test.txt': Read-only file system",
+    fix: "findmnt /\nsudo dmesg | grep -i 'EXT4-fs error\\|remounting filesystem read-only'\n# در صورت سالم بودن بلاک‌ها:\nsudo mount -o remount,rw /\n# در صورت خرابی دیسک: اجرای fsck در حالت آفلاین/تک‌کاربره",
+    question: "چرا کرنل لینوکس در زمان مشاهده خطای سکتور فایل‌سیستم را فوراً به Read-Only تغییر می‌دهد؟",
+    destructive: true
+  },
+  27: {
+    title: "کلید SSH رد شد: خطای 'bad ownership or modes'",
+    scenario: "اتصال SSH با کلید خصوصی ناموفق است و سرور کلید را به دلیل باز بودن دسترسی‌های فایل رد می‌کند.",
+    cmd: "chmod 777 ~/.ssh/authorized_keys\nssh -v user@localhost",
+    fix: "tail -n 20 /var/log/auth.log # خطا: Authentication refused: bad ownership or modes\nchmod 700 ~/.ssh\nchmod 600 ~/.ssh/authorized_keys\nchmod 600 ~/.ssh/id_rsa 2>/dev/null || true\nchown -R $USER:$USER ~/.ssh",
+    question: "تنظیم StrictModes yes در sshd_config چه مجوزی را برای ~/.ssh و authorized_keys الزامی می‌داند؟",
+    destructive: false
+  },
+  28: {
+    title: "اسکریپت‌نویسی شل (Bash): اسکریپت هشدار دیسک + ممیزی با shellcheck",
+    scenario: "نوشتن یک اسکریپت نظارتی برای اعلام هشدار پر شدن دیسک به همراه اعتبارسنجی سینتکس استاندارد.",
+    cmd: "cat << 'EOF' > /tmp/disk_alert.sh\n#!/usr/bin/env bash\nset -euo pipefail\nUSAGE=$(df / | awk 'NR==2 {print $5}' | tr -d '%')\nif [ \"$USAGE\" -gt 85 ]; then\n  echo \"CRITICAL: Root filesystem usage is ${USAGE}%\"\nfi\nEOF\nchmod +x /tmp/disk_alert.sh",
+    fix: "shellcheck /tmp/disk_alert.sh\n/tmp/disk_alert.sh\nsudo cp /tmp/disk_alert.sh /usr/local/bin/",
+    question: "فلگ‌های set -euo pipefail در ابتدای اسکریپت‌های Bash چه تدابیر امنیتی و پایداری ایجاد می‌کنند؟",
+    destructive: false
+  },
+  29: {
+    title: "تحلیل لاگ وب با Bash: استخراج ۱۰ آی‌پی پرترافیک (awk, sort, uniq)",
+    scenario: "تحلیل لاگ دسترسی Nginx برای شناسایی منابع احتمالی حمله DoS یا کلاینت‌های پرترافیک.",
+    cmd: "head -n 5 /var/log/nginx/access.log 2>/dev/null || echo '192.168.1.50 - - [10/Oct/2026] \"GET /\" 200'",
+    fix: "awk '{print $1}' /var/log/nginx/access.log | sort | uniq -c | sort -nr | head -n 10\n# استخراج کدهای خطای 4xx و 5xx:\nawk '$9 ~ /^[45]/ {print $9, $7}' /var/log/nginx/access.log | sort | uniq -c | sort -nr | head -n 10",
+    question: "چرا ترکیب awk | sort | uniq -c بسیار کارآمد است و چگونه می‌توان با cut به جای awk کار مشابه انجام داد؟",
+    destructive: false
+  },
+  30: {
+    title: "استراحت و آزمون جامع: مرور ۳۰ روز و بازسازی شبیه‌سازی اضطراری",
+    scenario: "پایان ماه اول دوره آزمایشگاه زیرساخت: ممیزی نهایی، گزارش ۳۰ روزه و آمادگی برای فاز شبکه و سرویس‌های پیشرفته.",
+    cmd: "python tools/lab_cli.py list\npython tools/lab_cli.py validate",
+    fix: "تولید گزارش جامع ماهانه، بررسی آمار ثبت‌شده در تب آمار و ثبت تگ git v1.0.0 در ریپو.",
+    question: "کدام سه مفهوم زیرساختی لینوکس در طول ۳۰ روز بیشترین اثر را در درک عمیق شما از سیستم‌عامل گذاشتند؟",
+    destructive: false
   }
 };
 
@@ -562,6 +760,45 @@ function gateInfo(){const n=dayN();const incAll=S.incs.length;const days=new Set
     {d:90,crit:'≥۱۰ INC که از ترمینال خالی بازسازی شده‌اند',pass:reb>=10,partial:'('+fa(reb)+' بازسازی‌شده)',en:'>=10 INCs rebuilt from a blank terminal'}
   ];}
 
+/* Safe clipboard copy helper */
+async function copyText(text, btn){
+  let ok = false;
+  try {
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      await navigator.clipboard.writeText(text);
+      ok = true;
+    }
+  } catch(e){}
+  if(!ok){
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+    } catch(e){}
+  }
+  if(btn){
+    const old = btn.textContent;
+    btn.textContent = ok ? 'کپی شد ✓' : 'کپی نشد';
+    btn.style.color = ok ? 'var(--good)' : 'var(--bad)';
+    setTimeout(()=>{ btn.textContent = old; btn.style.color = ''; }, 1500);
+  }
+}
+
+function renderCodeBlock(code){
+  return `
+    <div class="code-wrap">
+      <button type="button" class="copy-btn" onclick="copyText(decodeURIComponent('${encodeURIComponent(code)}'), this)">کپی دستور</button>
+      <pre class="code-block">${esc(code)}</pre>
+    </div>
+  `;
+}
+
 /* Guide box rendering */
 function renderGuide(dayNum, boxId){
   const g = RUNBOOKS[dayNum];
@@ -575,11 +812,12 @@ function renderGuide(dayNum, boxId){
   box.innerHTML = `
     <div class="guide-card">
       <h3>📖 سناریو: ${esc(g.title)}</h3>
+      ${g.destructive ? '<div class="danger-badge">⚠️ هشدار: فقط روی ماشین مجازی با Snapshot / Killercoda اجرا شود.</div>' : ''}
       <p style="margin:4px 0"><b>زمینه:</b> ${esc(g.scenario)}</p>
       <div class="label">دستورات تست / شبیه‌سازی:</div>
-      <div class="code-block">${esc(g.cmd)}</div>
+      ${renderCodeBlock(g.cmd)}
       <div class="label">نحوه بررسی و رفع (Fix):</div>
-      <div class="code-block">${esc(g.fix)}</div>
+      ${renderCodeBlock(g.fix)}
       <p style="margin:6px 0 0 0;color:var(--warn)"><b>سوال کلیدی برای گزارش:</b> ${esc(g.question)}</p>
     </div>
   `;
@@ -651,29 +889,47 @@ function showCalDetails(dateStr){
   $('calDayDetails').innerHTML = h;
 }
 
-function renderGuidesTab(){
+function renderGuidesTab(filterText = ''){
+  const term = (filterText || '').trim().toLowerCase();
   let h = '';
+  let matchCount = 0;
   S.plan.forEach(p=>{
     const g = RUNBOOKS[p.day];
+    if(term){
+      const searchable = [
+        `روز ${p.day}`,
+        p.title,
+        g ? g.scenario : '',
+        g ? g.cmd : '',
+        g ? g.fix : '',
+        g ? g.question : ''
+      ].join(' ').toLowerCase();
+      if(!searchable.includes(term)) return;
+    }
+    matchCount++;
     h += `
-      <details class="item" style="display:block">
+      <details class="item" style="display:block" ${term ? 'open' : ''}>
         <summary style="display:flex;align-items:center;justify-content:space-between">
           <span><b>روز ${fa(p.day)}:</b> ${esc(p.title)}</span>
           <span class="pill ${p.done?'good':'info'}">${p.done?'انجام شده':'راهنما'}</span>
         </summary>
         ${g ? `
           <div class="guide-card">
+            ${g.destructive ? '<div class="danger-badge">⚠️ هشدار: فقط روی ماشین مجازی با Snapshot / Killercoda اجرا شود.</div>' : ''}
             <p><b>سناریو:</b> ${esc(g.scenario)}</p>
             <div class="label">دستورات تست:</div>
-            <div class="code-block">${esc(g.cmd)}</div>
+            ${renderCodeBlock(g.cmd)}
             <div class="label">روش حل (Fix):</div>
-            <div class="code-block">${esc(g.fix)}</div>
+            ${renderCodeBlock(g.fix)}
             <p style="color:var(--warn)"><b>نکته/سوال:</b> ${esc(g.question)}</p>
           </div>
         ` : `<div class="guide-card muted">راهنمای تفصیلی برای این روز هنوز بارگذاری نشده است.</div>`}
       </details>
     `;
   });
+  if(matchCount === 0){
+    h = '<div class="empty">موردی متناسب با عبارت جستجو یافت نشد.</div>';
+  }
   $('guidesAccordion').innerHTML = h;
 }
 
@@ -851,6 +1107,7 @@ $('gTest').addEventListener('click',doTest);
 $('gCommit').addEventListener('click',doCommit);
 $('gRestore').addEventListener('click',e=>doRestore(e.currentTarget));
 $('syncTop').addEventListener('click',()=>{if(!S.pending&&GH.token){show('rules');return;}doCommit();});
+if($('guidesSearch')) $('guidesSearch').addEventListener('input', e => renderGuidesTab(e.target.value));
 
 /* Boot */
 (async()=>{
